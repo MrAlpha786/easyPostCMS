@@ -36,11 +36,10 @@ class CourierFactory extends Factory
             'recipient_address' => fake()->address(),
             'recipient_contact' => fake()->phoneNumber(),
             'recipient_pincode' => fake()->postcode(),
-            'weight' => fake()->randomFloat(min: 50, max: 500),
-            'height' => fake()->randomFloat(min: 50, max: 500),
-            'width' => fake()->randomFloat(min: 50, max: 500),
-            'length' => fake()->randomFloat(min: 50, max: 500),
-            'price' => fake()->randomFloat(min: 50, max: 500)
+            'weight' => fake()->randomFloat(min: 50, max: 50000),
+            'height' => fake()->randomFloat(min: 1, max: 200),
+            'width' => fake()->randomFloat(min: 5, max: 200),
+            'length' => fake()->randomFloat(min: 5, max: 200),
         ];
     }
 }

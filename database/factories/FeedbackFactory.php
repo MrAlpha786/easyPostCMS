@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Feedback>
  */
-class EmployeeFactory extends Factory
+class FeedbackFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +17,10 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
-            'firstname' => fake()->firstName(),
-            'lastname' => fake()->lastName(),
+            'name' => fake()->name(),
             'email' => fake()->email(),
-            'password' => fake()->password(minLength: 8, maxLength: 48),
-            'role' => 2,
+            'content' => fake()->text(500),
+            'type' => fake()->randomElement([1, 2])
         ];
     }
 }

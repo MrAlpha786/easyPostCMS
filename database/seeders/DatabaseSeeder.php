@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Courier;
+use App\Models\Feedback;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Courier::factory(10)->create();
+        $this->call([
+            PriceSeeder::class, // seed the price first
+            CourierSeeder::class,
+            EmployeeSeeder::class,
+            FeedbackSeeder::class,
+        ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Courier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class CourierController extends Controller
@@ -14,18 +15,6 @@ class CourierController extends Controller
     public function create(): View
     {
         return view('pages.registerCourier');
-    }
-
-    public function getStatus(Request $request)
-    {
-        $tracking_number = $request->input('tracking_number');
-
-        $status = Courier::where('tracking_number', $tracking_number)->value('status');
-
-
-        if ($status)
-            return view('partials.courierStatus')->with('status', $status);
-        return view('partials.courierStatus');
     }
 
     /**
@@ -64,12 +53,15 @@ class CourierController extends Controller
         $newCourier->width = $validatedData['width'];
         $newCourier->length = $validatedData['length'];
 
-        $newCourier->price = 200.0;
+        $response = Http::get(route('payment.process', ['price' => $newCourier->price]));
 
-        // Save the shipping record
-        $newCourier->save();
+        // if ($response->isSuccessful()) {
 
-        // Redirect back to the form with a success message
-        return redirect()->route('register-courier')->with('success', 'Shipping information submitted successfully!');
+        //     // Save the shipping record
+        //     $newCourier->save();
+
+        //     // Redirect back to the form with a success message
+        //     return redirect()->route('/register-courier')->with('success', 'Shipping information submitted successfully!');
+        // }
     }
 }

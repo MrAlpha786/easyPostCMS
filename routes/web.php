@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CourierController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Courier;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +26,8 @@ Route::view('/contact-us', 'pages.contact');
 Route::view('/feedback', 'pages.feedback');
 
 Route::view('/track-status', 'pages.trackStatus');
+
+Route::get('/process-payment', [PaymentController::class, 'create']);
 
 Route::get('/register-courier', [CourierController::class, 'create']);
 

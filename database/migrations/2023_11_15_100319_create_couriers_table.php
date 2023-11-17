@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('couriers', function (Blueprint $table) {
-            $table->integerIncrements('id');
+            $table->id();
             $table->string('tracking_number', 16);
             $table->string('sender_name', 100);
             $table->text('sender_address');

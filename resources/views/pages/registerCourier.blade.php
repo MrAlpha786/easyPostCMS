@@ -6,7 +6,7 @@
 
     <h2 class="text-2xl font-semibold mb-6">Courier Information Form</h2>
 
-    <form action="/register-courier" method="post">
+    <form action="/register-courier" method="post" id="register-courier-form">
         @csrf <!-- Add this line to include CSRF protection -->
 
         <div class="grid grid-cols-2 gap-4">
@@ -129,5 +129,4 @@
             </button>
         </div>
     </form>
-
 @endsection
