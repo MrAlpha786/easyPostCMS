@@ -1,40 +1,26 @@
-@extends('layouts.homeLayout')
+<!-- Extending the 'layouts.home' template -->
+@extends('layouts.home')
 
+<!-- Setting the title for the 'Track Courier' page -->
 @section('title', 'Track Courier')
 
+<!-- Content section -->
 @section('content')
-    <h2 class="text-2xl font-semibold mb-6">Track and Trace your Cargo/Courier</h2>
+    <h2 class="text-2xl font-semibold mb-6">Tracker/Search Status</h2>
 
-    <form action="/track-status" method="post" id="track-status-form">
-        @csrf <!--generate a csrf token-->
-        <label for="consignment">Tracking No.</label><br>
-        <input id="consignment" name="tracking_number" type="text" placeholder="EZP2535335" class="form-input" required>
-        <div class="text-center m-4">
-            <button type="submit"
-                class="bg-gray-800 text-white px-4 py-2 content-center rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Track
-                Now</button>
-        </div>
-    </form>
+    @include('forms.trackStatusForm')
 
-    <div id="result-container">
+    <!-- Check if a courier is available in the session -->
+    @if (session()->has('courier'))
+        <!-- PHP block to retrieve courier and statuses from the session -->
+        @php
+            $courier = session('courier');
+            if (session()->has('statuses')) {
+                $statuses = session('statuses');
+            }
+        @endphp
 
-    </div>
+        <!-- Include the 'partials.courierStatus' view -->
+        @include('partials.courierStatus')
+    @endif
 @endsection
-
-<script>
-    // Add this script in your Blade view or a separate JavaScript file
-    $(document).ready(function() {
-        $('#track-status-form').submit(function(e) {
-            e.preventDefault();
-
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                success: function(data) {
-                    $('#result-container').html(data);
-                }
-            });
-        });
-    });
-</script>

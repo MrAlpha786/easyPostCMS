@@ -2,19 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CourierStatusType;
 use App\Models\Courier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
+use Laravel\Prompts\Output\ConsoleOutput;
+use stdClass;
 
 class CourierController extends Controller
 {
+
+    /**
+     * Show all application users.
+     */
+    public function index(): View
+    {
+        return view('admin.courierList', [
+            'couriers' => Courier::paginate(15)
+        ]);
+    }
+
+
     /**
      * Show the form to create a new courier.
      */
     public function create(): View
     {
-        return view('pages.registerCourier');
+        if (auth()->check())
+            return view('admin.createCourier', ['statusOptions' => CourierStatusType::cases()]);
+        return view('pages.createCourier');
     }
 
     /**
@@ -53,15 +71,40 @@ class CourierController extends Controller
         $newCourier->width = $validatedData['width'];
         $newCourier->length = $validatedData['length'];
 
-        $response = Http::get(route('payment.process', ['price' => $newCourier->price]));
 
-        // if ($response->isSuccessful()) {
+        // Save the courier record
+        $newCourier->save();
 
-        //     // Save the shipping record
-        //     $newCourier->save();
+        return back()->with('success', 'Shipping information submitted successfully!');
+    }
 
-        //     // Redirect back to the form with a success message
-        //     return redirect()->route('/register-courier')->with('success', 'Shipping information submitted successfully!');
+    public function showStatus(Request $request)
+    {
+        $validatedData = $request->validate([
+            'tracking_number' => 'required|string|size:16',
+        ]);
+
+        $courier = Courier::where('tracking_number', $validatedData['tracking_number'])->first();
+
+        $statuses = null;
+        if ($courier)
+            $statuses = $courier->trackingStatuses()->orderBy('created_at')->get();
+
+
+        // $statuses = array();
+        // if ($status) {
+        //     foreach ($status as $s) {
+        //         $obj = new class
+        //         {
+        //             public $created_at = $s->created_at;
+        //             public $message = $s->status->toString();
+        //         };
+        //         $statuses[] = $obj;
+        //     }
         // }
+
+        return back()
+            ->withInput($request->input())
+            ->with(['statuses' => $statuses, 'courier' => $courier]);
     }
 }

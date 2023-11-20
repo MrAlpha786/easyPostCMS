@@ -1,7 +1,10 @@
-@extends('layouts.homeLayout')
+<!-- Extending the 'layouts.home' template -->
+@extends('layouts.home')
 
+<!-- Setting the title for the 'Contact Us' page -->
 @section('title', 'Contact Us')
 
+<!-- Content section -->
 @section('content')
     <h2 class="text-3xl font-semibold mb-4">Contact Us</h2>
     <p class="mb-2">If you have any questions or inquiries, feel free to reach out to us:</p>

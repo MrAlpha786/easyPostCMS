@@ -11,24 +11,45 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| Register web routes for the application. These routes are loaded by the
+| RouteServiceProvider and assigned to the "web" middleware group.
 |
 */
 
-Route::view('/', 'pages.home');
+// Home page route
+Route::view('/', 'pages.home')->name('home');
 
-Route::view('/about', 'pages.about');
+// About page route
+Route::view('/about', 'pages.about')->name('about');
 
-Route::view('/contact-us', 'pages.contact');
+// Contact Us page route
+Route::view('/contact-us', 'pages.contact')->name('contact');
 
-Route::view('/feedback', 'pages.feedback');
+// Feedback page route
+Route::view('/feedback', 'pages.feedback')->name('feedback');
 
-Route::view('/track-status', 'pages.trackStatus');
+// Track Status page route
+Route::view('track-status', 'pages.trackStatus')->name('trackStatus');
 
-Route::get('/process-payment', [PaymentController::class, 'create']);
+// Track Status form submission route
+Route::post('track-status', [CourierController::class, 'showStatus']);
 
-Route::get('/register-courier', [CourierController::class, 'create']);
+// Price List page route
+Route::view('pricelist', 'pages.pricelist')->name('pricelist');
 
-Route::post('/register-courier', [CourierController::class, 'store']);
+// Payment processing route
+Route::get('process-payment', [PaymentController::class, 'create']);
+
+// Courier registration page route
+Route::get('create-courier', [CourierController::class, 'create'])->name('registerCourier');
+
+// Courier registration form submission route
+Route::post('create-courier', [CourierController::class, 'store']);
+
+// Admin dashboard route
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+// Authentication routes (login, logout, registration, etc.)
+require __DIR__ . '/auth.php';

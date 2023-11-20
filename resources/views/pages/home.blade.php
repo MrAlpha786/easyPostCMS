@@ -1,10 +1,6 @@
-@extends('layouts.homeLayout')
+@extends('layouts.home')
 
 @section('title', 'Home')
-
-@section('breadcrumb')
-    <div class="text-gray-300">Home</div>
-@endsection
 
 @section('content')
     <section class="mb-8">

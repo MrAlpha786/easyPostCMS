@@ -1,11 +1,9 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+/* Include the base styles provided by Tailwind CSS */
 @tailwind base;
+
+/* Include the pre-designed components provided by Tailwind CSS */
 @tailwind components;
+
+/* Include the utility classes provided by Tailwind CSS */
 @tailwind utilities;
-
-.form-input {
-    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
-}
-
-.form-input-error {
-    @apply text-red-500 text-sm mt-2;
-}

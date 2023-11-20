@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
  */
-class EmployeeFactory extends Factory
+class UserFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,8 +21,7 @@ class EmployeeFactory extends Factory
             'firstname' => fake()->firstName(),
             'lastname' => fake()->lastName(),
             'email' => fake()->email(),
-            'password' => fake()->password(minLength: 8, maxLength: 48),
-            'role' => 2,
+            'password' => Hash::make(fake()->password(minLength: 8, maxLength: 48)),
         ];
     }
 }

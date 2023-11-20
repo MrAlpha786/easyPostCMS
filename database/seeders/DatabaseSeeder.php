@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Courier;
 use App\Models\Feedback;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PriceSeeder::class, // seed the price first
             CourierSeeder::class,
-            EmployeeSeeder::class,
+            UserSeeder::class,
             FeedbackSeeder::class,
         ]);
     }

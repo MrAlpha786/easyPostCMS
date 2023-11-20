@@ -1,5 +1,7 @@
-@extends('layouts.homeLayout')
+<!-- Extending the 'layouts.home' template -->
+@extends('layouts.home')
 
+<!-- Setting the title for the 'About Us' page -->
 @section('title', 'About Us')
 
 
