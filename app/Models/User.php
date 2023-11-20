@@ -44,4 +44,18 @@ class User extends Authenticatable
         'password' => 'hashed',
         'role' => UserRoleType::class,
     ];
+
+    /**
+     * Search for the query
+     */
+    public function scopeSearch($query, $q)
+    {
+        $columns = ['firstname', 'lastname', 'email',];
+
+        foreach ($columns as $column) {
+            $query->orWhere($column, 'LIKE', '%' . $q . '%');
+        }
+
+        return $query;
+    }
 }

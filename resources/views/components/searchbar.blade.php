@@ -2,7 +2,7 @@
 
 <div>
     <form accept="{{ $route }}" method="GET" class="flex items-center pb-4" onsubmit="return validateSearch()">
-        <input name="q" id="searchInput" type="text"
+        <input name="q" id="searchInput" type="text" value="{{ old('q') }}"
             class="w-full px-3 py-2 rounded-md rounded-r-none appearance-none text-gray-700 focus:outline-none"
             placeholder="Search..." />
 

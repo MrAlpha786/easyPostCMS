@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\CourierStatusType;
 use App\Models\Courier;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
-use Laravel\Prompts\Output\ConsoleOutput;
-use stdClass;
 
 class CourierController extends Controller
 {
@@ -27,8 +23,11 @@ class CourierController extends Controller
             $query->search($search);
         }
 
+        $request->flash();
+
         return view('admin.courierList', [
-            'couriers' => ($query) ? $query->paginate(15) : null
+            'couriers' => $query->paginate(15),
+            'input' => $request->input(),
         ]);
     }
 

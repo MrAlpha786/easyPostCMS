@@ -13,12 +13,14 @@
 
             <!-- Dashboard -->
             <x-sidebarMenuItem href="{{ route('dashboard') }}" label="Dashboard" />
-            
-            <!-- Employees -->
-            <x-sidebarMenuItem href="{{ route('employeeList') }}" label="Employees" id="employee-menu" :menuItems="[
-                ['label' => 'Add New', 'href' => route('createEmployee')],
-                ['label' => 'List', 'href' => route('employeeList')],
-            ]" />
+
+            @role('admin')
+                <!-- Employees -->
+                <x-sidebarMenuItem href="{{ route('userList') }}" label="Employees" id="employee-menu" :menuItems="[
+                    ['label' => 'Add New', 'href' => route('createUser')],
+                    ['label' => 'List', 'href' => route('userList')],
+                ]" />
+            @endrole
 
             <!-- Couriers -->
             <x-sidebarMenuItem href="{{ route('courierList') }}" label="Couriers" id="courier-munu" :menuItems="[

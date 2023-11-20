@@ -22,11 +22,11 @@
             <thead>
                 <tr class="border-b-2 border-gray-800">
                     <th class="text-center">#</th>
-                    <th>Tracking Number</th>
-                    <th>Recipient Information</th>
-                    <th>Sender Information</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th class="p-2 ">Tracking Number</th>
+                    <th class="p-2 ">Recipient Information</th>
+                    <th class="p-2 ">Sender Information</th>
+                    <th class="p-2 ">Status</th>
+                    <th class="p-2 text-center">Actions</th>
                 </tr>
             </thead>
             <tbody class="text-sm text-gray-800">
