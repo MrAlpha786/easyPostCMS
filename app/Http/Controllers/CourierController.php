@@ -17,10 +17,18 @@ class CourierController extends Controller
     /**
      * Show all application users.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        $search = $request->input('q');
+
+        $query = Courier::query();
+
+        if ($search) {
+            $query->search($search);
+        }
+
         return view('admin.courierList', [
-            'couriers' => Courier::paginate(15)
+            'couriers' => ($query) ? $query->paginate(15) : null
         ]);
     }
 
@@ -75,6 +83,9 @@ class CourierController extends Controller
         // Save the courier record
         $newCourier->save();
 
+        if (auth()->check())
+            return redirect()->route('courierList');
+
         return back()->with('success', 'Shipping information submitted successfully!');
     }
 
@@ -90,21 +101,37 @@ class CourierController extends Controller
         if ($courier)
             $statuses = $courier->trackingStatuses()->orderBy('created_at')->get();
 
-
-        // $statuses = array();
-        // if ($status) {
-        //     foreach ($status as $s) {
-        //         $obj = new class
-        //         {
-        //             public $created_at = $s->created_at;
-        //             public $message = $s->status->toString();
-        //         };
-        //         $statuses[] = $obj;
-        //     }
-        // }
-
         return back()
             ->withInput($request->input())
             ->with(['statuses' => $statuses, 'courier' => $courier]);
+    }
+
+    public function edit($id)
+    {
+        $courier = Courier::findOrFail($id);
+
+        return view('admin.createCourier', ['courier' => $courier]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        $courier = Courier::findOrFail($id);
+        $courier->update($request->all());
+
+        // You may add a flash message or other logic here
+
+        return redirect()->route('courierList'); // Redirect to the courier index page after update
+    }
+
+    public function destroy($id)
+    {
+        $courier = Courier::findOrFail($id);
+        $courier->delete();
+
+        return redirect()->route('courierList'); // Redirect to the courier index page after deletion
     }
 }

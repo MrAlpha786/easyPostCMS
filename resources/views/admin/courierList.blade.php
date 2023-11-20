@@ -16,76 +16,55 @@
     <div class="bg-slate-200 p-4 mt-4 rounded-md shadow-md ">
         <x-searchbar route="{{ route('courierList') }}" />
 
-        <div class="container">
-            @foreach ($couriers as $courier)
-                {{ $courier->tracking_number }}
-            @endforeach
-        </div>
+        {{ $couriers->links('components.paginator') }}
 
-        {{ $couriers->links() }}
-
-
-        <div class="flex w-full justify-between items-center">
-
-            <!-- Buttons -->
-            <x-secondaryButton class="flex items-center">
-                <i class="fas fa-long-arrow-left px-2"></i>
-                Prev
-            </x-secondaryButton>
-
-            <!-- Help text -->
-            <span>
-                Showing <span>1</span> to <span>10</span> of <span>100</span> Entries
-            </span>
-
-            <x-secondaryButton class="flex items-center">
-                Next
-                <i class="fas fa-long-arrow-right px-2"></i>
-            </x-secondaryButton>
-
-        </div>
-
-        <div class="p-4">
-            <table class="table-auto w-full border">
-                <thead>
-                    <tr>
-                        <th class="text-center">#</th>
-                        <th>Staff</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $data = [
-                            ['id' => 1, 'name' => 'John Doe', 'email' => 'john@example.com'],
-                            ['id' => 2, 'name' => 'Jane Doe', 'email' => 'jane@example.com'],
-                            // Add more data as needed
-                        ];
-                        $i = 1;
-                    @endphp
-                    @foreach ($data as $row)
-                        <tr>
-                            <td class="text-center">{{ $i++ }}</td>
-                            <td><b>{{ ucwords($row['name']) }}</b></td>
-                            <td><b>{{ $row['email'] }}</b></td>
-                            <td class="text-center">
-                                <div class="space-x-2">
-                                    <a href="index.php?page=edit_staff&id={{ $row['id'] }}"
-                                        class="bg-blue-500 text-white py-2 px-4 rounded-md">
+        <table class="table-auto w-full border">
+            <thead>
+                <tr class="border-b-2 border-gray-800">
+                    <th class="text-center">#</th>
+                    <th>Tracking Number</th>
+                    <th>Recipient Information</th>
+                    <th>Sender Information</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm text-gray-800">
+                @foreach ($couriers as $courier)
+                    <tr class="border-b border-gray-300 align-top">
+                        <td class="text-center p-2">{{ $courier->id }}</td>
+                        <td class="p-2">{{ $courier->tracking_number }}</td>
+                        <td class="p-2">
+                            {{ $courier->recipient_name }}<br />{{ $courier->recipient_address }}<br />{{ $courier->recipient_contact }}<br />Pincode:{{ $courier->recipient_pincode }}
+                        </td>
+                        <td class="p-2">
+                            {{ $courier->sender_name }}<br />{{ $courier->sender_address }}<br />{{ $courier->sender_contact }}<br />Pincode:{{ $courier->sender_pincode }}
+                        </td>
+                        <td class="p-2">{{ $courier->status->toString() }}</td>
+                        <td class="p-2">
+                            <div class="flex flex-col">
+                                <x-secondaryButton title="Update Status" class="p-2 m-2">
+                                    <a href="{{ route('updateStatus', $courier->id) }}">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button type="button" class="bg-red-500 text-white py-2 px-4 rounded-md delete_staff"
-                                        data-id="{{ $row['id'] }}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
+                                </x-secondaryButton>
 
+                                <x-secondaryButton title="Delete Courier" class="p-2 m-2"
+                                    onclick="event.preventDefault(); document.getElementById('delete-courier-form').submit();">
+                                    <i class="fas fa-trash"></i>
+                                    <form id="delete-courier-form" action="{{ route('deleteCourier', $courier->id) }}"
+                                        method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                </x-secondaryButton>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        {{ $couriers->links('components.paginator') }}
+    </div>
 @endsection

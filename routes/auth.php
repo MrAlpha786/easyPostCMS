@@ -18,9 +18,16 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
     Route::get('courier-list', [CourierController::class, 'index'])->name('courierList');
+
     Route::get('create-courier', [CourierController::class, 'create'])->name('createCourier');
     Route::post('create-courier', [CourierController::class, 'store']);
+
+    Route::get('update-status/{courier}/edit', [CourierController::class, 'edit'])->name('updateStatus');
+    Route::put('update-status/{courier}', [CourierController::class, 'update']);
+
+    Route::delete('delete-courier/{courier}', [CourierController::class, 'destroy'])->name('deleteCourier');
 });
 
 // Routes accessible only by users with the 'admin' role
@@ -28,5 +35,5 @@ Route::middleware(['auth', 'role:' . UserRoleType::ADMIN->toString()])->prefix('
     // Admin-specific routes
     Route::view('employee-list', 'admin.employeeList')->name('employeeList');
     Route::view('create-employee', 'admin.createEmployee')->name('createEmployee');
-    Route::post('/create-employee', [EmployeeController::class, 'store']);
+    Route::post('create-employee', [EmployeeController::class, 'store']);
 });

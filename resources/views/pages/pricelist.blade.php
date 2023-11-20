@@ -28,12 +28,12 @@
     <div class="overflow-x-auto bg-gray-300 rounded-md shadow-md p-2">
         <table>
             <thead>
-                <tr class="border-b-2 border-gray-800">
-                    <th class="py-2 px-4 border-r-2 border-gray-800">Max Weight</th>
-                    <th class="py-2 px-4">Up to 200 Kms.</th>
-                    <th class="py-2 px-4">201 to 1000 Kms.</th>
-                    <th class="py-2 px-4">1001 to 2000 Kms.</th>
-                    <th class="py-2 px-4">Above 2000 Kms.</th>
+                <tr class="py-2 border-b-2 border-gray-800">
+                    <th class="px-4 border-r-2 border-gray-800">Max Weight</th>
+                    <th class="px-4">Up to 200 Kms.</th>
+                    <th class="px-4">201 to 1000 Kms.</th>
+                    <th class="px-4">1001 to 2000 Kms.</th>
+                    <th class="px-4">Above 2000 Kms.</th>
                 </tr>
             </thead>
 

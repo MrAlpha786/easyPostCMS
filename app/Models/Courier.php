@@ -64,6 +64,20 @@ class Courier extends Model
     }
 
     /**
+     * Search for the query
+     */
+    public function scopeSearch($query, $q)
+    {
+        $columns = ['tracking_number', 'sender_name', 'recipient_name', 'sender_pincode', 'recipient_pincode'];
+
+        foreach ($columns as $column) {
+            $query->orWhere($column, 'LIKE', '%' . $q . '%');
+        }
+
+        return $query;
+    }
+
+    /**
      * Override the save method to ensure the price is recalculated before saving.
      *
      * @param array $options
