@@ -92,9 +92,9 @@ class UserController extends Controller
             return $value !== null;
         }));
 
-        // You may add a flash message or other logic here
+        $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'User Updated Successfully!'];
 
-        return redirect()->route('indexUser'); // Redirect to the courier index page after update
+        return redirect()->route('indexUser')->with('alert', $alert); // Redirect to the courier index page after update
     }
 
     public function destroy($id)
@@ -102,6 +102,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('indexUser'); // Redirect to the courier index page after deletion
+        $alert = ['type' => 'info', 'title' => 'Deleted!', 'message' => 'User Deleted Successfully!'];
+
+        return redirect()->route('indexUser')->with('alert', $alert); // Redirect to the courier index page after deletion
     }
 }

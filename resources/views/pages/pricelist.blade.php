@@ -25,7 +25,7 @@
         ];
     @endphp
     <h2 class="text-2xl font-semibold mb-6">Courier Price List</h2>
-    <div class="overflow-x-auto bg-gray-300 rounded-md shadow-md p-2">
+    <div class="overflow-x-auto bg-slate-200 rounded-md shadow-md p-2">
         <table>
             <thead>
                 <tr class="py-2 border-b-2 border-gray-800">

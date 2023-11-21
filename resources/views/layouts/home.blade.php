@@ -36,7 +36,7 @@
             <a href="{{ route('tracker') }}" class="block py-2">Tracker/Search Status</a>
 
             <!-- Courier Registration link -->
-            <a href="{{ route('createCourier') }}" class="block py-2">Courier Registration</a>
+            <a href="{{ route('courier') }}" class="block py-2">Courier Registration</a>
 
             <!-- Price List link -->
             <a href="{{ route('pricelist') }}" class="block py-2">Price List</a>

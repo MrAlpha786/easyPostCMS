@@ -20,6 +20,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         ->name('logout');
 
     Route::controller(CourierController::class)->prefix('courier')->group(function () {
+        Route::get('/create', 'create')->name('createCourier');
+        Route::post('/store', 'store')->name('storeCourier');
         Route::get('/index', 'index')->name('indexCourier');
         Route::get('/{id}/show', 'show')->name('showCourier');
         Route::get('/{id}/edit', 'edit')->name('editCourier');

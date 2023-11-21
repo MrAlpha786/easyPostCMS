@@ -7,6 +7,8 @@
 <!-- Content section -->
 @section('content')
     <h2 class="text-2xl font-semibold mb-6">Courier Information Form</h2>
-
-    @include('forms.courierForm', ['formRoute' => route('storeCourier'), 'method' => 'POST'])
+    @if (session('alert'))
+        <x-alert :alert="session('alert')" />
+    @endif
+    @include('forms.courierForm', ['formRoute' => route('registerCourier'), 'method' => 'POST'])
 @endsection

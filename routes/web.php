@@ -29,10 +29,10 @@ Route::view('contact', 'pages.contact')->name('contact');
 Route::view('feedback', 'pages.feedback')->name('feedback');
 
 // Track Status page route
-Route::view('track', 'pages.trackStatus')->name('tracker');
+Route::view('tracker', 'pages.trackStatus')->name('tracker');
 
 // Track Status form submission route
-Route::get('courier/track', [CourierController::class, 'trackCourier'])->name('trackCourier');
+Route::get('tracker/show', [CourierController::class, 'trackCourier'])->name('trackCourier');
 
 
 // Price List page route
@@ -43,8 +43,8 @@ Route::view('pricelist', 'pages.pricelist')->name('pricelist');
 Route::get('process-payment', [PaymentController::class, 'create']);
 
 
-Route::get('courier/create', [CourierController::class, 'create'])->name('createCourier');
-Route::post('courier/store', [CourierController::class, 'store'])->name('storeCourier');
+Route::get('courier', [CourierController::class, 'createCourier'])->name('courier');
+Route::post('courier/register', [CourierController::class, 'registerCourier'])->name('registerCourier');
 
 
 // Admin dashboard route

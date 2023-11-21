@@ -68,14 +68,16 @@
     </div>
 
     @auth
-        <div class="bg-slate-200 p-4 mt-4 rounded-md shadow-md ">
-            <h3 class="text-lg font-semibold mb-4">Status</h3>
-            <x-dropdown id="status" label="Status" name="status" :value="old('status', $status ?? '')">
-                @foreach ($statusOptions as $option)
-                    <option value="{{ $option }}">{{ $option->toString() }}</option>
-                @endforeach
-            </x-dropdown>
-        </div>
+        @isset($statusOptions)
+            <div class="bg-slate-200 p-4 mt-4 rounded-md shadow-md ">
+                <h3 class="text-lg font-semibold mb-4">Status</h3>
+                <x-dropdown id="status" label="Status" name="status" :value="old('status', $status ?? '')">
+                    @foreach ($statusOptions as $option)
+                        <option value="{{ $option }}">{{ $option->toString() }}</option>
+                    @endforeach
+                </x-dropdown>
+            </div>
+        @endisset
     @endauth
 
 

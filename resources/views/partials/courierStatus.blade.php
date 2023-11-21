@@ -9,7 +9,7 @@
         <div class="grid grid-cols-2 gap-4">
 
             <!-- Sender Information -->
-            <div class="bg-slate-200 p-4 rounded-md shadow-md my">
+            <div class="bg-slate-200 p-4 rounded-md shadow-md">
                 <h2 class="text-xl font-semibold mb-4">Sender Information:</h2>
                 <p><span class="font-semibold">Name:</span> {{ $courier->sender_name }}</p>
                 <p><span class="font-semibold">Address:</span>
@@ -19,7 +19,7 @@
             </div>
 
             <!-- Recipient Information -->
-            <div class="bg-slate-200 p-4 rounded-md shadow-md my">
+            <div class="bg-slate-200 p-4 rounded-md shadow-md">
                 <h2 class="text-xl font-semibold mb-4">Recipient Information:</h2>
                 <p><span class="font-semibold">Name:</span> {{ $courier->recipient_name }}</p>
                 <p><span class="font-semibold">Address:</span>

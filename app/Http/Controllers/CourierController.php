@@ -3,12 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CourierStatusType;
+use App\Http\Middleware\CheckRole;
 use App\Models\Courier;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use PhpParser\Node\Stmt\TryCatch;
 
 class CourierController extends Controller
 {
+
+    private function __validate(Request $request)
+    {
+        // Validate the form data
+        return $request->validate([
+            'sender_name' => 'required|string|max:100',
+            'sender_address' => 'required|string',
+            'sender_contact' => 'required|string|max:20',
+            'sender_pincode' => 'required|string|max:10',
+            'recipient_name' => 'required|string|max:100',
+            'recipient_address' => 'required|string',
+            'recipient_contact' => 'required|string|max:20',
+            'recipient_pincode' => 'required|string|max:10',
+            'weight' => 'required|numeric|between:10,50000',
+            'height' => 'required|numeric|between:5,200',
+            'width' => 'required|numeric|between:5,200',
+            'length' => 'required|numeric|between:5,200',
+            'status' => 'nullable|numeric',
+        ]);
+    }
+
+    private function __store($validatedData): bool
+    {
+        try {
+            // Create a new shipping record
+            Courier::create([
+                'sender_name' => $validatedData['sender_name'],
+                'sender_address' => $validatedData['sender_address'],
+                'sender_contact' => $validatedData['sender_contact'],
+                'sender_pincode' => $validatedData['sender_pincode'],
+                'recipient_name' => $validatedData['recipient_name'],
+                'recipient_address' => $validatedData['recipient_address'],
+                'recipient_contact' => $validatedData['recipient_contact'],
+                'recipient_pincode' => $validatedData['recipient_pincode'],
+                'weight' => $validatedData['weight'],
+                'height' => $validatedData['height'],
+                'width' => $validatedData['width'],
+                'length' => $validatedData['length'],
+                'status' => $validatedData['status'] ?? CourierStatusType::ITEM_ACCEPTED_BY_COURIER,
+            ]);
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+
+        return true;
+    }
 
     /**
      * Show all application users.
@@ -36,9 +85,25 @@ class CourierController extends Controller
      */
     public function create(): View
     {
-        if (auth()->check())
-            return view('admin.createCourier', ['statusOptions' => CourierStatusType::cases()]);
+        return view('admin.createCourier', ['statusOptions' => CourierStatusType::cases()]);
+    }
+
+    public function createCourier(): View
+    {
         return view('pages.createCourier');
+    }
+
+    public function registerCourier(Request $request)
+    {
+        $validatedData = $this->__validate($request);
+
+        if ($this->__store($validatedData)) {
+            $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Courier Registered Successfully!'];
+        } else {
+            $alert = ['type' => 'error', 'title' => 'Failed!', 'message' => 'Something Went Wrong!'];
+        }
+
+        return back()->with('alert', $alert);
     }
 
     /**
@@ -46,47 +111,15 @@ class CourierController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the form data
-        $validatedData = $request->validate([
-            'sender_name' => 'required|string|max:100',
-            'sender_address' => 'required|string',
-            'sender_contact' => 'required|string|max:20',
-            'sender_pincode' => 'required|string|max:10',
-            'recipient_name' => 'required|string|max:100',
-            'recipient_address' => 'required|string',
-            'recipient_contact' => 'required|string|max:20',
-            'recipient_pincode' => 'required|string|max:10',
-            'weight' => 'required|numeric|between:10,50000',
-            'height' => 'required|numeric|between:5,200',
-            'width' => 'required|numeric|between:5,200',
-            'length' => 'required|numeric|between:5,200',
-            'status' => 'nullable|numeric',
-        ]);
+        $validatedData = $this->__validate($request);
 
-        // Create a new shipping record
-        $newCourier = new Courier();
-        $newCourier->sender_name = $validatedData['sender_name'];
-        $newCourier->sender_address = $validatedData['sender_address'];
-        $newCourier->sender_contact = $validatedData['sender_contact'];
-        $newCourier->sender_pincode = $validatedData['sender_pincode'];
-        $newCourier->recipient_name = $validatedData['recipient_name'];
-        $newCourier->recipient_address = $validatedData['recipient_address'];
-        $newCourier->recipient_contact = $validatedData['recipient_contact'];
-        $newCourier->recipient_pincode = $validatedData['recipient_pincode'];
-        $newCourier->weight = $validatedData['weight'];
-        $newCourier->height = $validatedData['height'];
-        $newCourier->width = $validatedData['width'];
-        $newCourier->length = $validatedData['length'];
-        $newCourier->status = $validatedData['status'] ?? CourierStatusType::ITEM_ACCEPTED_BY_COURIER;
+        if ($this->__store($validatedData)) {
+            $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Courier Created Successfully!'];
+        } else {
+            $alert = ['type' => 'error', 'title' => 'Failded!', 'message' => 'Courier Not Created!'];
+        }
 
-
-        // Save the courier record
-        $newCourier->save();
-
-        if (auth()->check())
-            return redirect()->route('indexCourier');
-
-        return back()->with('success', 'Shipping information submitted successfully!');
+        return redirect()->route('indexCourier')->with('alert', $alert);
     }
 
     public function show($id)
@@ -115,7 +148,7 @@ class CourierController extends Controller
 
         return back()
             ->withInput()
-            ->with(['statuses' => $statuses ?? null, 'courier' => $courier ?? null]);
+            ->with(['statuses' => $statuses ?? null, 'courier' => $courier]);
     }
 
     public function edit($id)
@@ -151,9 +184,9 @@ class CourierController extends Controller
             return $value !== null;
         }));
 
-        // You may add a flash message or other logic here
+        $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Courier Updated Successfully!'];
 
-        return redirect()->route('indexCourier'); // Redirect to the courier index page after update
+        return redirect()->route('indexCourier')->with('alert', $alert); // Redirect to the courier index page after update
     }
 
     public function destroy($id)
@@ -161,6 +194,8 @@ class CourierController extends Controller
         $courier = Courier::findOrFail($id);
         $courier->delete();
 
-        return redirect()->route('indexCourier'); // Redirect to the courier index page after deletion
+        $alert = ['type' => 'info', 'title' => 'Deleted!', 'message' => 'Courier Deleted Successfully!'];
+
+        return redirect()->route('indexCourier')->with('alert', $alert); // Redirect to the courier index page after deletion
     }
 }
