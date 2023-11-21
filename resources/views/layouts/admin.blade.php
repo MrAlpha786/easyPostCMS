@@ -7,7 +7,9 @@
         <aside class="bg-gray-800 text-white w-64 px-4 py-6 main-sidebar items-center elevation-4 overflow-y-auto">
             <!-- Brand/logo -->
             <div class="font-black text-4xl text-center">
-                EasyPost
+                <a href="{{ route('home') }}">
+                    EasyPost
+                </a>
             </div>
             <div class="w-full h-1 bg-white my-4"></div>
 

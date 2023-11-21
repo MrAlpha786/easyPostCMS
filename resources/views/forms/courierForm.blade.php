@@ -1,5 +1,5 @@
 <!-- Form for registering a courier with CSRF protection -->
-<form class="grid" action="{{ $formRoute }}" method="post" id="create-courier-form">
+<form class="grid" action="{{ $formRoute }}" method="POST" id="create-courier-form">
     @csrf <!-- Generate a CSRF token -->
     @method($method)
 
@@ -80,6 +80,6 @@
 
 
     <!-- Custom primary button component for submitting and paying -->
-    <x-primaryButton label="Submit & Pay" class="justify-self-end mt-4"><input type="submit"
+    <x-primaryButton class="justify-self-end mt-4"><input type="submit"
             value="@auth Submit @else Submit & Pay @endauth"></x-primaryButton>
 </form>

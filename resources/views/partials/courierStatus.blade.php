@@ -58,12 +58,6 @@
                 </div>
             </div>
         @endif
-
-        <!-- Display a message if no courier is found -->
-    @else
-        <p class="text-red-500">No Courier Found! Check Your Input Or Try Again After Sometime, It May Take Time To
-            Update Courier Status.
-        </p>
     @endif
 
 </div>

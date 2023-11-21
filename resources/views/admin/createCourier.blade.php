@@ -5,5 +5,5 @@
 
 @section('content')
     <h2 class="text-3xl font-semibold mb-4">Register Courier</h2>
-    @include('forms.courierForm', ['formRoute' => route('createCourier'), 'method' => 'POST'])
+    @include('forms.courierForm', ['formRoute' => route('storeCourier'), 'method' => 'POST'])
 @endsection

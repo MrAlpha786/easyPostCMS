@@ -103,20 +103,19 @@ class CourierController extends Controller
     public function trackCourier(Request $request)
     {
         $validatedData = $request->validate([
-            'tracking_number' => 'required|string|size:16',
+            'tracking_number' => 'required|string|alpha_num|size:16',
         ]);
 
         $courier = Courier::where('tracking_number', $validatedData['tracking_number'])->first();
 
-        $request->flash();
+        if (!$courier)
+            return back()->withInput()->with('nodata', true);
 
-        $statuses = null;
-        if ($courier)
-            $statuses = $courier->trackingStatuses()->orderBy('created_at')->get();
+        $statuses = $courier->trackingStatuses()->orderBy('created_at')->get();
 
         return back()
-            ->withInput($request->input())
-            ->with(['statuses' => $statuses, 'courier' => $courier]);
+            ->withInput()
+            ->with(['statuses' => $statuses ?? null, 'courier' => $courier ?? null]);
     }
 
     public function edit($id)

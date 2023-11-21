@@ -43,8 +43,8 @@ Route::view('pricelist', 'pages.pricelist')->name('pricelist');
 Route::get('process-payment', [PaymentController::class, 'create']);
 
 
-Route::get('couriers/create', [CourierController::class, 'create'])->name('createCourier');
-Route::post('couriers/store', [CourierController::class, 'store'])->name('storeCourier');
+Route::get('courier/create', [CourierController::class, 'create'])->name('createCourier');
+Route::post('courier/store', [CourierController::class, 'store'])->name('storeCourier');
 
 
 // Admin dashboard route

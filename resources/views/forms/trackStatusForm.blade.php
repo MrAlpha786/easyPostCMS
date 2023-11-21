@@ -1,5 +1,5 @@
 <!-- Form for tracking courier with CSRF token -->
-<form class="grid " action="{{ $formRoute }}" method="post" id="track-status-form">
+<form class="grid " action="{{ $formRoute }}" method="POST" id="track-status-form">
     @csrf <!-- Generate a CSRF token -->
     @method($method)
 

@@ -23,4 +23,10 @@
         <!-- Include the 'partials.courierStatus' view -->
         @include('partials.courierStatus')
     @endif
+
+    @if (session()->has('nodata'))
+        <p class="text-red-500 py-4">No courier found! Check your input or try again after some time. It may take time to
+            update courier status.
+        </p>
+    @endif
 @endsection

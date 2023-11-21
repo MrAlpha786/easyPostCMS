@@ -1,5 +1,5 @@
 <!-- Form for submitting feedback and complaints with CSRF protection -->
-<form class="grid" method="post">
+<form class="grid" method="POST">
     @csrf
 
     <!-- Custom input component for Name -->
@@ -12,5 +12,5 @@
     <x-textarea id="message" name="message" label="Feedback/Complaint Message:" />
 
     <!-- Custom primary button component for form submission -->
-    <x-primaryButton class="justify-self-end mt-2"><input type="submit" value="Submit" ></x-primaryButton>
+    <x-primaryButton class="justify-self-end mt-2"><input type="submit" value="Submit"></x-primaryButton>
 </form>

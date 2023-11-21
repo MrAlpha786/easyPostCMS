@@ -1,6 +1,6 @@
 <!-- resources/views/admin/editUser.blade.php -->
 
-<form class="grid" action="{{ $formRoute }}" method="post" id="create-user-form">
+<form class="grid" action="{{ $formRoute }}" method="POST" id="create-user-form">
     @csrf <!-- Generate a CSRF token -->
     @method($method)
 

@@ -7,7 +7,9 @@
     <header class="bg-white-500 p-4 shadow-lg flex items-center">
         <!-- Brand/logo -->
         <div class="font-black text-4xl">
-            EasyPost
+            <a href="{{ route('home') }}">
+                EasyPost
+            </a>
         </div>
         <div class="text-4xl mx-2">|</div>
 
