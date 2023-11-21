@@ -14,6 +14,10 @@ class Courier extends Model
 {
     use HasFactory;
 
+    protected $guarded = [
+        'price',
+    ];
+
     // cast status value to enum
     protected $casts = [
         'status' => CourierStatusType::class,
@@ -48,7 +52,6 @@ class Courier extends Model
 
         static::creating(function ($model) {
             $model->generateTrackingNumber();
-            $model->status = CourierStatusType::ITEM_ACCEPTED_BY_COURIER;
         });
     }
 
@@ -94,10 +97,6 @@ class Courier extends Model
     // Define the relationship with status
     public function trackingStatuses(): HasMany
     {
-        return $this->hasMany(
-            TrackingStatus::class,
-            'tracking_number',
-            'tracking_number'
-        );
+        return $this->hasMany(TrackingStatus::class);
     }
 }

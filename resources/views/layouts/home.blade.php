@@ -31,10 +31,10 @@
             <a href="{{ route('home') }}" class="block py-2">Home</a>
 
             <!-- Tracker/Search Status link -->
-            <a href="{{ route('trackStatus') }}" class="block py-2">Tracker/Search Status</a>
+            <a href="{{ route('tracker') }}" class="block py-2">Tracker/Search Status</a>
 
             <!-- Courier Registration link -->
-            <a href="{{ route('registerCourier') }}" class="block py-2">Courier Registration</a>
+            <a href="{{ route('createCourier') }}" class="block py-2">Courier Registration</a>
 
             <!-- Price List link -->
             <a href="{{ route('pricelist') }}" class="block py-2">Price List</a>

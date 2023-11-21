@@ -20,31 +20,32 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'pages.home')->name('home');
 
 // About page route
-Route::view('/about', 'pages.about')->name('about');
+Route::view('about', 'pages.about')->name('about');
 
 // Contact Us page route
-Route::view('/contact-us', 'pages.contact')->name('contact');
+Route::view('contact', 'pages.contact')->name('contact');
 
 // Feedback page route
-Route::view('/feedback', 'pages.feedback')->name('feedback');
+Route::view('feedback', 'pages.feedback')->name('feedback');
 
 // Track Status page route
-Route::view('track-status', 'pages.trackStatus')->name('trackStatus');
+Route::view('track', 'pages.trackStatus')->name('tracker');
 
 // Track Status form submission route
-Route::post('track-status', [CourierController::class, 'showStatus']);
+Route::get('courier/track', [CourierController::class, 'trackCourier'])->name('trackCourier');
+
 
 // Price List page route
 Route::view('pricelist', 'pages.pricelist')->name('pricelist');
 
+
 // Payment processing route
 Route::get('process-payment', [PaymentController::class, 'create']);
 
-// Courier registration page route
-Route::get('create-courier', [CourierController::class, 'create'])->name('registerCourier');
 
-// Courier registration form submission route
-Route::post('create-courier', [CourierController::class, 'store']);
+Route::get('couriers/create', [CourierController::class, 'create'])->name('createCourier');
+Route::post('couriers/store', [CourierController::class, 'store'])->name('storeCourier');
+
 
 // Admin dashboard route
 Route::get('/admin', function () {

@@ -4,6 +4,6 @@
 @section('title', 'Create Courier')
 
 @section('content')
-    <x-alert />
-    @include('forms.newCourierForm')
+    <h2 class="text-3xl font-semibold mb-4">Register Courier</h2>
+    @include('forms.courierForm', ['formRoute' => route('createCourier'), 'method' => 'POST'])
 @endsection

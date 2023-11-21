@@ -23,7 +23,7 @@
                 </div>
 
                 <x-primaryButton class="justify-self-end">
-                    <input type="submit" value="Log In">
+                    <input type="submit" value="Log In" >
                 </x-primaryButton>
 
             </form>

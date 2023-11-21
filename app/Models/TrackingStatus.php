@@ -18,14 +18,6 @@ class TrackingStatus extends Model
         'status' => CourierStatusType::class,
     ];
 
-    /**
-     * Get the latest status only
-     */
-    public function scopeLatest($query)
-    {
-        return $query->orderBy('created_at')->first();
-    }
-
     public function getStatusString()
     {
         return $this->status->toString();
@@ -34,10 +26,6 @@ class TrackingStatus extends Model
     // Define the relationship with courier
     public function courier(): BelongsTo
     {
-        return $this->belongsTo(
-            Courier::class,
-            'tracking_number',
-            'tracking_number'
-        );
+        return $this->belongsTo(Courier::class);
     }
 }

@@ -6,6 +6,8 @@ use App\Enums\UserRoleType;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -49,52 +51,57 @@ class UserController extends Controller
             'lastname' => 'required|string|max:100',
             'email' => 'required|email',
             'role' => 'required|numeric',
-            'password' => 'required|password',
+            'password' => 'required|string|min:8|confirmed'
         ]);
 
         // Create a new shipping record
-        $newUser = new User();
-        $newUser->firstname = $validatedData['firstname'];
-        $newUser->lastname = $validatedData['lastname'];
-        $newUser->email = $validatedData['email'];
-        $newUser->role = $validatedData['role'];
-        $newUser->password = $validatedData['password'];
+        User::create([
+            'firstname' => $validatedData['firstname'],
+            'lastname' => $validatedData['lastname'],
+            'email' => $validatedData['email'],
+            'role' => $validatedData['role'],
+            'password' => $validatedData['password']
+        ]);
 
-        // Save the courier record
-        $newUser->save();
+        $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'User Created Successfully!'];
 
-        return redirect()->route('employeeList');
+        return redirect()->route('indexUser')->with('alert', $alert);
     }
 
     public function edit($id)
     {
-        $courier = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        return view('admin.createUser', ['user' => $courier]);
+        $data = $user->toArray();
+
+        return view('admin.editUser', ['roleOptions' => UserRoleType::cases()])->with($data);
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'firstname' => 'required|string|max:100',
-            'lastname' => 'required|string|max:100',
-            'email' => 'required|email',
-            'role' => 'required|numeric',
-            'password' => 'required|password',
+        $validatedData = $request->validate([
+            'firstname' => 'nullable|string|max:100',
+            'lastname' => 'nullable|string|max:100',
+            'email' => 'nullable|email',
+            'role' => 'nullable|numeric',
+            'password' => 'nullable|string|min:8|confirmed',
         ]);
 
         $user = User::findOrFail($id);
-        $user->update($request->all());
+        $user->update(array_filter($validatedData, function ($value) {
+            return $value !== null;
+        }));
 
         // You may add a flash message or other logic here
 
-        return redirect()->route('employeeList'); // Redirect to the courier index page after update
+        return redirect()->route('indexUser'); // Redirect to the courier index page after update
     }
 
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
+        $user->delete();
 
-        return redirect()->route('employeeList'); // Redirect to the courier index page after deletion
+        return redirect()->route('indexUser'); // Redirect to the courier index page after deletion
     }
 }

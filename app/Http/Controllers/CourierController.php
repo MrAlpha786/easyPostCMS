@@ -27,7 +27,6 @@ class CourierController extends Controller
 
         return view('admin.courierList', [
             'couriers' => $query->paginate(15),
-            'input' => $request->input(),
         ]);
     }
 
@@ -58,9 +57,10 @@ class CourierController extends Controller
             'recipient_contact' => 'required|string|max:20',
             'recipient_pincode' => 'required|string|max:10',
             'weight' => 'required|numeric|between:10,50000',
-            'height' => 'required|numeric|between:5,100',
-            'width' => 'required|numeric|between:5,100',
-            'length' => 'required|numeric|between:5,100',
+            'height' => 'required|numeric|between:5,200',
+            'width' => 'required|numeric|between:5,200',
+            'length' => 'required|numeric|between:5,200',
+            'status' => 'nullable|numeric',
         ]);
 
         // Create a new shipping record
@@ -77,24 +77,38 @@ class CourierController extends Controller
         $newCourier->height = $validatedData['height'];
         $newCourier->width = $validatedData['width'];
         $newCourier->length = $validatedData['length'];
+        $newCourier->status = $validatedData['status'] ?? CourierStatusType::ITEM_ACCEPTED_BY_COURIER;
 
 
         // Save the courier record
         $newCourier->save();
 
         if (auth()->check())
-            return redirect()->route('courierList');
+            return redirect()->route('indexCourier');
 
         return back()->with('success', 'Shipping information submitted successfully!');
     }
 
-    public function showStatus(Request $request)
+    public function show($id)
+    {
+        $courier = Courier::findOrFail($id);
+
+        $statuses = null;
+        if ($courier)
+            $statuses = $courier->trackingStatuses()->orderBy('created_at')->get();
+
+        return view('admin.showCourier', ['courier' => $courier, 'statuses' => $statuses]);
+    }
+
+    public function trackCourier(Request $request)
     {
         $validatedData = $request->validate([
             'tracking_number' => 'required|string|size:16',
         ]);
 
         $courier = Courier::where('tracking_number', $validatedData['tracking_number'])->first();
+
+        $request->flash();
 
         $statuses = null;
         if ($courier)
@@ -109,21 +123,38 @@ class CourierController extends Controller
     {
         $courier = Courier::findOrFail($id);
 
-        return view('admin.createCourier', ['courier' => $courier]);
+        $data = $courier->toArray();
+
+        return view('admin.editCourier', ['statusOptions' => CourierStatusType::cases()])->with($data);
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'status' => 'required',
+        // Validate the form data
+        $validatedData = $request->validate([
+            'sender_name' => 'nullable|string|max:100',
+            'sender_address' => 'nullable|string',
+            'sender_contact' => 'nullable|string|max:20',
+            'sender_pincode' => 'nullable|string|max:10',
+            'recipient_name' => 'nullable|string|max:100',
+            'recipient_address' => 'nullable|string',
+            'recipient_contact' => 'nullable|string|max:20',
+            'recipient_pincode' => 'nullable|string|max:10',
+            'weight' => 'nullable|numeric|between:10,50000',
+            'height' => 'nullable|numeric|between:5,200',
+            'width' => 'nullable|numeric|between:5,200',
+            'length' => 'nullable|numeric|between:5,200',
+            'status' => 'nullable|numeric',
         ]);
 
         $courier = Courier::findOrFail($id);
-        $courier->update($request->all());
+        $courier->update(array_filter($validatedData, function ($value) {
+            return $value !== null;
+        }));
 
         // You may add a flash message or other logic here
 
-        return redirect()->route('courierList'); // Redirect to the courier index page after update
+        return redirect()->route('indexCourier'); // Redirect to the courier index page after update
     }
 
     public function destroy($id)
@@ -131,6 +162,6 @@ class CourierController extends Controller
         $courier = Courier::findOrFail($id);
         $courier->delete();
 
-        return redirect()->route('courierList'); // Redirect to the courier index page after deletion
+        return redirect()->route('indexCourier'); // Redirect to the courier index page after deletion
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tracking_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('tracking_number', 16);
+            $table->foreignId('courier_id');
             $table->tinyInteger('status');
             $table->timestamps();
         });

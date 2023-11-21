@@ -14,7 +14,7 @@
     </div>
 
     <div class="bg-slate-200 p-4 mt-4 rounded-md shadow-md ">
-        <x-searchbar route="{{ route('courierList') }}" />
+        <x-searchbar route="{{ route('indexCourier') }}" />
 
         {{ $couriers->links('components.paginator') }}
 
@@ -43,17 +43,23 @@
                         <td class="p-2">{{ $courier->status->toString() }}</td>
                         <td class="p-2">
                             <div class="flex flex-col">
-                                <x-secondaryButton title="Update Status" class="p-2 m-2">
-                                    <a href="{{ route('updateStatus', $courier->id) }}">
+                                <x-secondaryButton title="Courier Details" class="p-2 m-2">
+                                    <a href="{{ route('showCourier', $courier->id) }}">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </x-secondaryButton>
+                                <x-secondaryButton title="Update Courier" class="p-2 m-2">
+                                    <a href="{{ route('editCourier', $courier->id) }}">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                 </x-secondaryButton>
 
                                 <x-secondaryButton title="Delete Courier" class="p-2 m-2"
-                                    onclick="event.preventDefault(); document.getElementById('delete-courier-form').submit();">
+                                    onclick="event.preventDefault(); document.getElementById('delete-courier-form-{{ $courier->id }}').submit();">
                                     <i class="fas fa-trash"></i>
-                                    <form id="delete-courier-form" action="{{ route('deleteCourier', $courier->id) }}"
-                                        method="POST" style="display: none;">
+                                    <form id="delete-courier-form-{{ $courier->id }}"
+                                        action="{{ route('deleteCourier', $courier->id) }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                         @method('DELETE')
                                     </form>

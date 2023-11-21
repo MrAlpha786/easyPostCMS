@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Courier;
-use App\Models\TrackingStatus;
 
 class CourierObserver
 {
@@ -20,7 +19,7 @@ class CourierObserver
      */
     public function updated(Courier $courier): void
     {
-        if ($courier->trackingStatuses()->latest()->status != $courier->status)
+        if ($courier->trackingStatuses()->orderBy('updated_at', 'desc')->first()->status != $courier->status)
             $courier->trackingStatuses()->create(['status' => $courier->status]);
     }
 

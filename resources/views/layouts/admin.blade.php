@@ -16,16 +16,16 @@
 
             @role('admin')
                 <!-- Employees -->
-                <x-sidebarMenuItem href="{{ route('userList') }}" label="Employees" id="employee-menu" :menuItems="[
+                <x-sidebarMenuItem href="{{ route('indexUser') }}" label="Employees" id="employee-menu" :menuItems="[
                     ['label' => 'Add New', 'href' => route('createUser')],
-                    ['label' => 'List', 'href' => route('userList')],
+                    ['label' => 'List', 'href' => route('indexUser')],
                 ]" />
             @endrole
 
             <!-- Couriers -->
-            <x-sidebarMenuItem href="{{ route('courierList') }}" label="Couriers" id="courier-munu" :menuItems="[
+            <x-sidebarMenuItem href="{{ route('indexCourier') }}" label="Couriers" id="courier-munu" :menuItems="[
                 ['label' => 'Add New', 'href' => route('createCourier')],
-                ['label' => 'List', 'href' => route('courierList')],
+                ['label' => 'List', 'href' => route('indexCourier')],
             ]" />
 
 

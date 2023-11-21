@@ -8,5 +8,5 @@
 @section('content')
     <h2 class="text-2xl font-semibold mb-6">Courier Information Form</h2>
 
-    @include('forms.newCourierForm')
+    @include('forms.courierForm', ['formRoute' => route('storeCourier'), 'method' => 'POST'])
 @endsection

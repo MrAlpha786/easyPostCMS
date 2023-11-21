@@ -1,6 +1,6 @@
 <!-- resources/views/components/alert.blade.php -->
 
-@props(['type' => 'info', 'title' => '', 'dismissable' => false])
+@props(['alert' => null, 'dismissable' => false])
 
 @php
     $alertClasses = [
@@ -11,12 +11,12 @@
     ];
 @endphp
 
-<div {{ $attributes->merge(['class' => $alertClasses[$type] . ' mb-4 px-4 py-3 rounded-md flex justify-between shadow-md']) }}
+<div {{ $attributes->merge(['class' => $alertClasses[$alert['type']] . ' mb-4 px-4 py-3 rounded-md flex justify-between shadow-md']) }}
     role="alert" id="dismissableAlert">
 
     <div>
-        <strong class="font-bold">{{ $title }}</strong>
-        <span class="block sm:inline">{{ $slot }}</span>
+        <strong class="font-bold">{{ $alert['title'] }}</strong>
+        <span class="block sm:inline">{{ $alert['message'] }}</span>
     </div>
 
     @if ($dismissable)

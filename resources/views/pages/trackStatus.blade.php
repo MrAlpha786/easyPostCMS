@@ -8,7 +8,7 @@
 @section('content')
     <h2 class="text-2xl font-semibold mb-6">Tracker/Search Status</h2>
 
-    @include('forms.trackStatusForm')
+    @include('forms.trackStatusForm', ['formRoute' => route('trackCourier'), 'method' => 'GET'])
 
     <!-- Check if a courier is available in the session -->
     @if (session()->has('courier'))

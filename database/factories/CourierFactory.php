@@ -40,6 +40,7 @@ class CourierFactory extends Factory
             'height' => fake()->randomFloat(min: 1, max: 200),
             'width' => fake()->randomFloat(min: 5, max: 200),
             'length' => fake()->randomFloat(min: 5, max: 200),
+            'status' => CourierStatusType::ITEM_ACCEPTED_BY_COURIER,
         ];
     }
 }
