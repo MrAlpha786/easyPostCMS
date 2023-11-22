@@ -30,6 +30,13 @@
                 ['label' => 'List', 'href' => route('indexCourier')],
             ]" />
 
+            @role('admin')
+                <x-sidebarMenuItem href="{{ route('indexFeedback') }}" label="Feedback/Complaints" id="feedback-menu" />
+            @endrole
+            @role('clerk')
+                <x-sidebarMenuItem href="{{ route('createFeedback') }}" label="Feedback/Complaints" id="feedback-menu" />
+            @endrole
+
 
             <div class="fixed bottom-0 p-4">
 
@@ -52,6 +59,9 @@
 
             <!-- Content wrapper -->
             <div id="content-wrapper" class="flex-1 overflow-x-hidden overflow-y-auto p-4">
+                @if (session('alert'))
+                    <x-alert :alert="session('alert')" />
+                @endif
                 <!-- Yielding the content section -->
                 @yield('content')
 

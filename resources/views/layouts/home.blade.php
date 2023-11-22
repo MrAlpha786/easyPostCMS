@@ -55,7 +55,9 @@
 
         <!-- Content wrapper -->
         <div id="content-wrapper" class="w-full p-4">
-
+            @if (session('alert'))
+                <x-alert :alert="session('alert')" />
+            @endif
             <!-- Yielding the content section -->
             @yield('content')
 

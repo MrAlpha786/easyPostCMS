@@ -3,6 +3,7 @@
 use App\Enums\UserRoleType;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CourierController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::patch('/{id}/update', 'update')->name('updateCourier');
         Route::delete('/{id}/delete', 'destroy')->name('deleteCourier');
     });
+    Route::controller(FeedbackController::class)->prefix('feedback')->group(function () {
+        Route::get('/create', 'create')->name('createFeedback');
+        Route::post('/store', 'store')->name('storeFeedback');
+    });
 });
 
 // Routes accessible only by users with the 'admin' role
@@ -40,5 +45,10 @@ Route::middleware(['auth', 'role:' . UserRoleType::ADMIN->toString()])->prefix('
         Route::get('/{id}/edit', 'edit')->name('editUser');
         Route::patch('/{id}/update', 'update')->name('updateUser');
         Route::delete('/{id}/delete', 'destroy')->name('deleteUser');
+    });
+
+    Route::controller(FeedbackController::class)->prefix('feedback')->group(function () {
+        Route::get('/index', 'index')->name('indexFeedback');
+        Route::delete('/{id}/delete', 'delete')->name('deleteFeedback');
     });
 });

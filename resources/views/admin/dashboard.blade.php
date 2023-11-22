@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 
+<!-- Setting the title for the 'About Us' page -->
+@section('title', 'Dashboard')
+
 @section('content')
     <div class="bg-slate-200 p-4 rounded-md shadow-md ">
         <h2 class="text-3xl font-semibold ">Welcome&nbsp;<span

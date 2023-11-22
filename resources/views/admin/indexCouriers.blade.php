@@ -4,10 +4,6 @@
 @section('title', 'Courier List')
 
 @section('content')
-    @if (session('alert'))
-        <x-alert :alert="session('alert')" />
-    @endif
-
     <div class="bg-slate-200 p-4 rounded-md shadow-md ">
         <div class="flex justify-between items-center">
             <h3 class="text-lg font-semibold">Courier List</h3>

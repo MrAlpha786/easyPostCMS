@@ -27,7 +27,7 @@ class UserController extends Controller
 
         $request->flash();
 
-        return view('admin.userList', [
+        return view('admin.indexUsers', [
             'users' => $query->whereNot('role', UserRoleType::ADMIN)
                 ->orderBy('updated_at', 'desc')
                 ->paginate(15)

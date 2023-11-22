@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\CourierStatusType;
-use App\Http\Middleware\CheckRole;
 use App\Models\Courier;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use PhpParser\Node\Stmt\TryCatch;
 
 class CourierController extends Controller
 {
@@ -74,7 +72,7 @@ class CourierController extends Controller
 
         $request->flash();
 
-        return view('admin.courierList', [
+        return view('admin.indexCouriers', [
             'couriers' => $query->orderBy('updated_at', 'desc')->paginate(15),
         ]);
     }

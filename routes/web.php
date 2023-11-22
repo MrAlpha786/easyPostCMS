@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourierController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,29 +26,24 @@ Route::view('about', 'pages.about')->name('about');
 Route::view('contact', 'pages.contact')->name('contact');
 
 // Feedback page route
-Route::view('feedback', 'pages.feedback')->name('feedback');
+Route::get('feedback', [FeedbackController::class, 'createFeedback'])->name('feedback');
+Route::post('feedback/submit', [FeedbackController::class, 'storeFeedback'])->name('submitFeedback');
 
-// Track Status page route
+// Track Status routes
 Route::view('tracker', 'pages.trackStatus')->name('tracker');
-
-// Track Status form submission route
 Route::get('tracker/show', [CourierController::class, 'trackCourier'])->name('trackCourier');
 
-
-// Price List page route
-Route::view('pricelist', 'pages.pricelist')->name('pricelist');
-
-
-// Payment processing route
-Route::get('process-payment', [PaymentController::class, 'create']);
-
-
+// Courier registration routes
 Route::get('courier', [CourierController::class, 'createCourier'])->name('courier');
 Route::post('courier/register', [CourierController::class, 'registerCourier'])->name('registerCourier');
 
+// Price List page route
+Route::view('pricelist', 'pages.pricelist')->name('pricelist');
+Route::get('process-payment', [PaymentController::class, 'create']);
 
 // Admin dashboard route
 Route::get('/admin', [DashboardController::class, 'stats'])->middleware(['auth'])->name('dashboard');
 
-// Authentication routes (login, logout, registration, etc.)
+
+// Authentication routes (login, logout, etc.)
 require __DIR__ . '/auth.php';
