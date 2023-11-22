@@ -13,19 +13,21 @@ enum CourierStatusType: int
     case OUT_FOR_DELIVERY = 7;
     case DELIVERED = 8;
     case UNSUCCESSFUL_DELIVERY_ATTEMPT = 9;
+    case RETURN = 10;
 
     public function toString(): string
     {
         return match ($this) {
-            CourierStatusType::ITEM_ACCEPTED_BY_COURIER => "Item Accepted By Courier",
-            CourierStatusType::PICKED_UP => "Picked Up",
+            CourierStatusType::ITEM_ACCEPTED_BY_COURIER => "Item Accepted",
+            CourierStatusType::PICKED_UP => "Pickup Scheduled",
             CourierStatusType::COLLECTED => "Collected",
             CourierStatusType::SHIPPED => "Shipped",
             CourierStatusType::IN_TRANSIT => "In Transit",
             CourierStatusType::ARRIVED_AT_DESTINATION => "Arrived At Destination",
             CourierStatusType::OUT_FOR_DELIVERY => "Out For Delivery",
             CourierStatusType::DELIVERED => "Delivered",
-            CourierStatusType::UNSUCCESSFUL_DELIVERY_ATTEMPT => "Unsuccessful Delivery Attempt"
+            CourierStatusType::UNSUCCESSFUL_DELIVERY_ATTEMPT => "Unsuccessful Delivery",
+            CourierStatusType::RETURN => "Returned Back"
         };
     }
 }

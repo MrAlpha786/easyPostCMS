@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourierController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,9 +47,7 @@ Route::post('courier/register', [CourierController::class, 'registerCourier'])->
 
 
 // Admin dashboard route
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/admin', [DashboardController::class, 'stats'])->middleware(['auth'])->name('dashboard');
 
 // Authentication routes (login, logout, registration, etc.)
 require __DIR__ . '/auth.php';
