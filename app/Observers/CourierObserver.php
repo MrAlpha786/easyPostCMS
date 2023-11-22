@@ -26,8 +26,8 @@ class CourierObserver
     /**
      * Handle the Courier "deleted" event.
      */
-    public function deleted(Courier $courier): void
+    public function deleting(Courier $courier): void
     {
-        $courier->trackingStatuses()->truncate();
+        $courier->trackingStatuses()->delete();
     }
 }

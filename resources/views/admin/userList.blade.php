@@ -12,7 +12,7 @@
         <div class="flex justify-between items-center">
             <h3 class="text-lg font-semibold">Employee List</h3>
             <x-primaryButton>
-                <a href="{{ route('createUser') }}">Add New</a>
+                <a href="{{ route('createUser') }}" class="inline-block px-4 py-2">Add New</a>
             </x-primaryButton>
         </div>
     </div>
@@ -25,7 +25,7 @@
         <table class="table-auto w-full border">
             <thead>
                 <tr class="border-b-2 border-gray-800">
-                    <th class="text-center">#</th>
+                    <th class="text-center">Id</th>
                     <th class="p-2">Name</th>
                     <th class="p-2">Email</th>
                     <th class="p-2">Role</th>

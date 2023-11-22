@@ -8,5 +8,6 @@
         :value="old('tracking_number')" />
 
     <!-- Custom primary button component -->
-    <x-primaryButton label="Track Now" class="justify-self-end"><input type="submit" value="Search"></x-primaryButton>
+    <x-primaryButton label="Track Now" class="justify-self-end"><input class="inline-block px-4 py-2" type="submit"
+            value="Search"></x-primaryButton>
 </form>

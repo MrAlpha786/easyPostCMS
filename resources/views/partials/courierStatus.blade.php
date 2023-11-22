@@ -10,7 +10,7 @@
 
             <!-- Sender Information -->
             <div class="bg-slate-200 p-4 rounded-md shadow-md">
-                <h2 class="text-xl font-semibold mb-4">Sender Information:</h2>
+                <h2 class="text-xl font-semibold mb-4">Sender Information</h2>
                 <p><span class="font-semibold">Name:</span> {{ $courier->sender_name }}</p>
                 <p><span class="font-semibold">Address:</span>
                     {{ $courier->sender_address }}&nbsp;Pincode:&nbsp;{{ $courier->sender_pincode }}
@@ -20,7 +20,7 @@
 
             <!-- Recipient Information -->
             <div class="bg-slate-200 p-4 rounded-md shadow-md">
-                <h2 class="text-xl font-semibold mb-4">Recipient Information:</h2>
+                <h2 class="text-xl font-semibold mb-4">Recipient Information</h2>
                 <p><span class="font-semibold">Name:</span> {{ $courier->recipient_name }}</p>
                 <p><span class="font-semibold">Address:</span>
                     {{ $courier->recipient_address }}&nbsp;Pincode:&nbsp;{{ $courier->recipient_pincode }}
@@ -29,10 +29,29 @@
             </div>
         </div>
 
+        <div class="bg-slate-200 p-4 mt-4 rounded-md shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Courier Information</h2>
+            <div class="flex justify-between items-center">
+                <div>
+                    <p><span class="font-semibold">Weight:</span> {{ $courier->weight }}&nbsp;gm(s)</p>
+                    <p><span class="font-semibold">Dimensions:</span>
+                        {{ $courier->length }}&nbsp;&times;&nbsp;{{ $courier->width }}&nbsp;&times;&nbsp;{{ $courier->height }}&nbsp;cm(s)
+                    </p>
+                </div>
+                <div class="text-center">
+                    <p class="font-semibold">
+                        Price
+                    </p>
+                    <p class="font-semibold text-xl text-red-500">
+                        &#8377;&nbsp;{{ number_format($courier->price, 2, '.', ',') }}</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Check if courier has statuses and display them -->
         @if ($statuses && $statuses->count() > 0)
             <div class="bg-slate-200 p-4 rounded-md shadow-md my-4">
-                <h2 class="text-xl font-semibold m-4 ml-0">Package status</h2>
+                <h2 class="text-xl font-semibold m-4 ml-0">Courier Status</h2>
                 <div class="flex flex-col md:grid grid-cols-12">
 
                     <!-- Loop through statuses and display each one -->

@@ -48,7 +48,7 @@ class UserController extends Controller
         // Validate the form data
         $validatedData = $request->validate([
             'firstname' => 'required|string|max:100',
-            'lastname' => 'required|string|max:100',
+            'lastname' => 'nullable|string|max:100',
             'email' => 'required|email',
             'role' => 'required|numeric',
             'password' => 'required|string|min:8|confirmed'
@@ -57,7 +57,7 @@ class UserController extends Controller
         // Create a new shipping record
         User::create([
             'firstname' => $validatedData['firstname'],
-            'lastname' => $validatedData['lastname'],
+            'lastname' => $validatedData['lastname'] ?? '',
             'email' => $validatedData['email'],
             'role' => $validatedData['role'],
             'password' => $validatedData['password']

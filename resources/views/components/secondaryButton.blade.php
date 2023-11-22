@@ -1,3 +1,3 @@
-<button {{ $attributes->merge(['class' => 'py-2 hover:text-red-500 disabled:pointer-events-none cursor-pointer']) }}>
+<div {{ $attributes->merge(['class' => 'p-2 hover:text-red-500 disabled:pointer-events-none cursor-pointer']) }}>
     {{ $slot }}
-</button>
+</div>

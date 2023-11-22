@@ -18,7 +18,7 @@ class Price extends Model
     public static function calculatePrice($weight)
     {
         // For demo purpose I used only the parcel weight to calculate price
-        // in real world weight, dimensions, and distance can be used.
+        // in real world, weight, dimensions, and distance can be used.
         $factor = 0;
         if ($weight > 500) {
             $factor = ($weight + 500) / 500;

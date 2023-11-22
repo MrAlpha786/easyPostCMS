@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\CourierController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProfileController;
-use App\Models\Courier;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -82,6 +82,6 @@
 
 
     <!-- Custom primary button component for submitting and paying -->
-    <x-primaryButton class="justify-self-end mt-4"><input type="submit"
-            value="@auth Submit @else Submit & Pay @endauth"></x-primaryButton>
+    <x-primaryButton class="justify-self-end mt-4"><input class="inline-block px-4 py-2" type="submit"
+            value="Submit"></x-primaryButton>
 </form>

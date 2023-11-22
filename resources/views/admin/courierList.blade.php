@@ -12,7 +12,7 @@
         <div class="flex justify-between items-center">
             <h3 class="text-lg font-semibold">Courier List</h3>
             <x-primaryButton>
-                <a href="{{ route('createCourier') }}">Add New</a>
+                <a href="{{ route('createCourier') }}" class="inline-block px-4 py-2">Add New</a>
             </x-primaryButton>
         </div>
     </div>
@@ -25,11 +25,11 @@
         <table class="table-auto w-full border">
             <thead>
                 <tr class="border-b-2 border-gray-800">
-                    <th class="text-center">#</th>
+                    <th class="text-center">Id</th>
                     <th class="p-2 ">Tracking Number</th>
                     <th class="p-2 ">Recipient Information</th>
                     <th class="p-2 ">Sender Information</th>
-                    <th class="p-2 ">Status</th>
+                    <th class="p-2 ">Current Status</th>
                     <th class="p-2 text-center">Actions</th>
                 </tr>
             </thead>

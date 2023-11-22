@@ -12,5 +12,6 @@
     <x-textarea id="message" name="message" label="Feedback/Complaint Message:" />
 
     <!-- Custom primary button component for form submission -->
-    <x-primaryButton class="justify-self-end mt-2"><input type="submit" value="Submit"></x-primaryButton>
+    <x-primaryButton class="justify-self-end mt-2"><input class="inline-block px-4 py-2" type="submit"
+            value="Submit"></x-primaryButton>
 </form>
