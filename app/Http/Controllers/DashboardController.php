@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\CourierStatusType;
 use App\Enums\UserRoleType;
 use App\Models\Courier;
+use App\Models\Feedback;
 use App\Models\TrackingStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,8 +16,10 @@ class DashboardController extends Controller
     public function stats()
     {
         $stats = array();
-        if (auth()->user()->role == UserRoleType::ADMIN)
+        if (auth()->user()->role == UserRoleType::ADMIN) {
             $stats['Employees'] =  User::count();
+            $stats['Feedbacks'] = Feedback::count();
+        }
 
         $stats['Couriers'] = Courier::count();
 
