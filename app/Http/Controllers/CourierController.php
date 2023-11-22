@@ -75,7 +75,7 @@ class CourierController extends Controller
         $request->flash();
 
         return view('admin.courierList', [
-            'couriers' => $query->paginate(15),
+            'couriers' => $query->orderBy('updated_at', 'desc')->paginate(15),
         ]);
     }
 
