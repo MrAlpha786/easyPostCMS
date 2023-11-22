@@ -19,7 +19,7 @@ class FeedbackFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->email(),
-            'content' => fake()->text(500),
+            'content' => fake()->text(),
             'type' => fake()->randomElement([1, 2])
         ];
     }

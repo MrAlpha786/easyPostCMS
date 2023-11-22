@@ -13,6 +13,19 @@ class CourierSeeder extends Seeder
      */
     public function run(): void
     {
-        Courier::factory(50)->create();
+        // Create 10 fake couriers
+        Courier::factory(10)->create();
+
+        // For each courier update status random times.
+        foreach (Courier::all() as $courier) {
+            $maxNumber = rand(2, 8);
+
+            for ($i = 2; $i < $maxNumber; $i++) {
+                $courier->update(['status' => $i]);
+            }
+            if ($maxNumber == 8) {
+                $courier->update(['status' => rand(8, 10)]);
+            }
+        }
     }
 }
