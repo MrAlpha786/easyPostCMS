@@ -30,7 +30,7 @@ class Courier extends Model
     {
         do {
             $value = Str::start(Str::random($length = 13), 'EZP');
-        } while (static::where('tracking_number', $value)->exists());
+        } while (static::whereRaw("BINARY `tracking_number` = ?", $value)->exists());
 
         $this->tracking_number =  $value;
     }

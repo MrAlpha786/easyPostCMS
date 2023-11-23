@@ -4,6 +4,7 @@ use App\Enums\UserRoleType;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CourierController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\PriceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::patch('/{id}/update', 'update')->name('updateCourier');
         Route::delete('/{id}/delete', 'destroy')->name('deleteCourier');
     });
-    Route::controller(FeedbackController::class)->prefix('feedback')->group(function () {
+
+    Route::controller(FeedbackController::class)->prefix('feedbacks')->group(function () {
         Route::get('/create', 'create')->name('createFeedback');
         Route::post('/store', 'store')->name('storeFeedback');
     });
@@ -50,5 +52,10 @@ Route::middleware(['auth', 'role:' . UserRoleType::ADMIN->toString()])->prefix('
     Route::controller(FeedbackController::class)->prefix('feedback')->group(function () {
         Route::get('/index', 'index')->name('indexFeedback');
         Route::delete('/{id}/delete', 'delete')->name('deleteFeedback');
+    });
+
+    Route::controller(PriceController::class)->prefix('prices')->group(function () {
+        Route::get('/edit', 'edit')->name('editPrices');
+        Route::put('/update', 'update')->name('updatePrices');
     });
 });

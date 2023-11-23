@@ -33,8 +33,8 @@ class PriceSeeder extends Seeder
             array('max_weight' => '501', 'max_distance' => '10000', 'rate' => '50')
         );
 
-        foreach ($prices as $priceDate) {
-            Price::create($priceDate);
+        foreach ($prices as $priceData) {
+            Price::create($priceData);
         }
     }
 }

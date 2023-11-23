@@ -32,6 +32,7 @@
 
             @role('admin')
                 <x-sidebarMenuItem href="{{ route('indexFeedback') }}" label="Feedback/Complaints" id="feedback-menu" />
+                <x-sidebarMenuItem href="{{ route('editPrices') }}" label="Price Table" id="price-menu" />
             @endrole
             @role('clerk')
                 <x-sidebarMenuItem href="{{ route('createFeedback') }}" label="Feedback/Complaints" id="feedback-menu" />

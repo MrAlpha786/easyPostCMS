@@ -34,7 +34,7 @@ class FeedbackController extends Controller
     function store(Request $request)
     {
         $request->validate([
-            'message' => 'required|string',
+            'content' => 'required|string',
         ]);
 
         Feedback::create([
@@ -46,7 +46,7 @@ class FeedbackController extends Controller
 
         $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Feedback Registered Successfully!'];
 
-        return view('admin.dashboard')->with('alert', $alert);
+        return redirect()->route('createFeedback')->with('alert', $alert);
     }
 
     function createFeedback(): View

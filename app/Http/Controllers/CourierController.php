@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\CourierStatusType;
 use App\Models\Courier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\View\View;
 
 class CourierController extends Controller
@@ -30,31 +31,29 @@ class CourierController extends Controller
         ]);
     }
 
-    private function __store($validatedData): bool
+    private function __store($validatedData): Courier
     {
         try {
             // Create a new shipping record
-            Courier::create([
-                'sender_name' => $validatedData['sender_name'],
-                'sender_address' => $validatedData['sender_address'],
-                'sender_contact' => $validatedData['sender_contact'],
-                'sender_pincode' => $validatedData['sender_pincode'],
-                'recipient_name' => $validatedData['recipient_name'],
-                'recipient_address' => $validatedData['recipient_address'],
-                'recipient_contact' => $validatedData['recipient_contact'],
-                'recipient_pincode' => $validatedData['recipient_pincode'],
-                'weight' => $validatedData['weight'],
-                'height' => $validatedData['height'],
-                'width' => $validatedData['width'],
-                'length' => $validatedData['length'],
-                'status' => $validatedData['status'] ?? CourierStatusType::ITEM_ACCEPTED_BY_COURIER,
-            ]);
+            $courier = new Courier();
+            $courier->sender_name = $validatedData['sender_name'];
+            $courier->sender_address = $validatedData['sender_address'];
+            $courier->sender_contact = $validatedData['sender_contact'];
+            $courier->sender_pincode = $validatedData['sender_pincode'];
+            $courier->recipient_name = $validatedData['recipient_name'];
+            $courier->recipient_address = $validatedData['recipient_address'];
+            $courier->recipient_contact = $validatedData['recipient_contact'];
+            $courier->recipient_pincode = $validatedData['recipient_pincode'];
+            $courier->weight = $validatedData['weight'];
+            $courier->height = $validatedData['height'];
+            $courier->width = $validatedData['width'];
+            $courier->length = $validatedData['length'];
+            $courier->status = $validatedData['status'] ?? CourierStatusType::ITEM_ACCEPTED_BY_COURIER;
         } catch (\Throwable $th) {
-            return false;
+            return null;
         }
 
-
-        return true;
+        return $courier;
     }
 
     /**
@@ -95,13 +94,17 @@ class CourierController extends Controller
     {
         $validatedData = $this->__validate($request);
 
-        if ($this->__store($validatedData)) {
-            $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Courier Registered Successfully!'];
-        } else {
+        try {
+            $courier = $this->__store($validatedData);
+            $courier->save();
+        } catch (\Throwable $th) {
             $alert = ['type' => 'error', 'title' => 'Failed!', 'message' => 'Something Went Wrong!'];
+            return back()->with('alert', $alert);
         }
+        // Encrypt the information before sending, in real world scenerio Secret keys are used to securely exchange data.
+        $encryptedData = Crypt::encrypt(['courier_id' => $courier->id, 'courier_price' => $courier->price]);
 
-        return back()->with('alert', $alert);
+        return redirect()->route('createPayment', ['data' => urlencode($encryptedData)]);
     }
 
     /**
@@ -111,11 +114,16 @@ class CourierController extends Controller
     {
         $validatedData = $this->__validate($request);
 
-        if ($this->__store($validatedData)) {
+        try {
+            $courier = $this->__store($validatedData);
+
+            $courier->save();
+
             $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Courier Created Successfully!'];
-        } else {
+        } catch (\Throwable $th) {
             $alert = ['type' => 'error', 'title' => 'Failded!', 'message' => 'Courier Not Created!'];
         }
+
 
         return redirect()->route('indexCourier')->with('alert', $alert);
     }
@@ -137,7 +145,7 @@ class CourierController extends Controller
             'tracking_number' => 'required|string|alpha_num|size:16',
         ]);
 
-        $courier = Courier::where('tracking_number', $validatedData['tracking_number'])->first();
+        $courier = Courier::whereRaw("BINARY `tracking_number` = ?", $validatedData['tracking_number'])->first();
 
         if (!$courier)
             return back()->withInput()->with('nodata', true);

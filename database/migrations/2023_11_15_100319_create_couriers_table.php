@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('couriers', function (Blueprint $table) {
             $table->id();
-            $table->string('tracking_number', 16);
+            $table->string('tracking_number', 16)->unique();
             $table->string('sender_name', 100);
             $table->text('sender_address');
             $table->string('sender_contact', 20);

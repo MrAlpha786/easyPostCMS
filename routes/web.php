@@ -4,6 +4,7 @@ use App\Http\Controllers\CourierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PriceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,25 +26,36 @@ Route::view('about', 'pages.about')->name('about');
 // Contact Us page route
 Route::view('contact', 'pages.contact')->name('contact');
 
-// Feedback page route
-Route::get('feedback', [FeedbackController::class, 'createFeedback'])->name('feedback');
-Route::post('feedback/submit', [FeedbackController::class, 'storeFeedback'])->name('submitFeedback');
-
-// Track Status routes
 Route::view('tracker', 'pages.trackStatus')->name('tracker');
-Route::get('tracker/show', [CourierController::class, 'trackCourier'])->name('trackCourier');
 
-// Courier registration routes
-Route::get('courier', [CourierController::class, 'createCourier'])->name('courier');
-Route::post('courier/register', [CourierController::class, 'registerCourier'])->name('registerCourier');
+Route::controller(FeedbackController::class)->prefix('feedback')->group(function () {
+    // Feedback page route
+    Route::get('/', 'createFeedback')->name('feedback');
+    Route::post('/submit', 'storeFeedback')->name('submitFeedback');
+});
+
+Route::controller(CourierController::class)->prefix('courier')->group(function () {
+    // Courier registration routes
+    Route::get('/', 'createCourier')->name('courier');
+    // Track Status routes
+    Route::get('/track', 'trackCourier')->name('trackCourier');
+    Route::post('/register', 'registerCourier')->name('registerCourier');
+});
+
+
+
+Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+    Route::get('/', 'create')->name('createPayment');
+    Route::post('/process', 'processPayment')->name('processPayment');
+    Route::get('/success', 'paymentSuccess')->name('paymentSuccess');
+    Route::get('/failure', 'paymentFailure')->name('paymentFailure');
+});
 
 // Price List page route
-Route::view('pricelist', 'pages.pricelist')->name('pricelist');
-Route::get('process-payment', [PaymentController::class, 'create']);
+Route::get('pricelist', [PriceController::class, 'showPricelist'])->name('pricelist');
 
 // Admin dashboard route
 Route::get('/admin', [DashboardController::class, 'stats'])->middleware(['auth'])->name('dashboard');
-
 
 // Authentication routes (login, logout, etc.)
 require __DIR__ . '/auth.php';
