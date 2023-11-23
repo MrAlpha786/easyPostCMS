@@ -9,8 +9,10 @@ class Feedback extends Model
 {
     use HasFactory;
 
+    // Explicty defined the table name, because default name was not correct.
     protected $table = 'feedbacks';
 
+    // These fields are mass fillables.
     protected $fillable = [
         'name',
         'email',

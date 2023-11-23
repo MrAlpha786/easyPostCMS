@@ -1,3 +1,4 @@
+{{-- Custom searchbar component --}}
 @props(['route' => '#'])
 
 <div>

@@ -1,5 +1,4 @@
-<!-- resources/views/components/alert.blade.php -->
-
+{{-- Alert component --}}
 @props(['alert' => null])
 
 @php

@@ -8,14 +8,17 @@ use App\Models\Courier;
 use App\Models\Feedback;
 use App\Models\TrackingStatus;
 use App\Models\User;
-use Illuminate\Http\Request;
 
+// Control dashboard view.
 class DashboardController extends Controller
 {
-
+    /**
+     * Return statistics of all data.
+     */
     public function stats()
     {
         $stats = array();
+        // Below data is only meant for admin users.
         if (auth()->user()->role == UserRoleType::ADMIN) {
             $stats['Employees'] =  User::count();
             $stats['Feedbacks'] = Feedback::count();

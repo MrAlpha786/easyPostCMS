@@ -70,5 +70,4 @@
         <p>Project Design & Developed By - MD Faizan 2100328785</p>
     </footer>
 
-    <!-- End of the main section -->
 @endsection

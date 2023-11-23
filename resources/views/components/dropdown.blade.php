@@ -1,5 +1,4 @@
-<!-- resources/views/components/select-input.blade.php -->
-
+{{-- Custom dropdowm component --}}
 @props(['id', 'name', 'value' => null, 'label'])
 
 <div {{ $attributes->merge(['class' => 'block mb-4']) }}>

@@ -1,14 +1,16 @@
 @extends('layouts.admin')
 
-<!-- Setting the title for the 'About Us' page -->
+<!-- Setting the title for the page -->
 @section('title', 'Dashboard')
 
 @section('content')
+    {{-- Welcome Message --}}
     <div class="bg-slate-200 p-4 rounded-md shadow-md ">
         <h2 class="text-3xl font-semibold ">Welcome&nbsp;<span
                 class="capitalize text-red-500">{{ auth()->user()->firstname }}!</span></h2>
     </div>
 
+    {{-- Dynamically generate the stats --}}
     @isset($stats)
         <div class="mt-4">
             <h3 class="text-2xl font-semibold my-4">Statistics</h3>

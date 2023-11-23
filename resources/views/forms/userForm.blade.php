@@ -1,5 +1,4 @@
-<!-- resources/views/admin/editUser.blade.php -->
-
+{{-- Form registering users --}}
 <form class="grid" action="{{ $formRoute }}" method="POST" id="create-user-form">
     @csrf <!-- Generate a CSRF token -->
     @method($method)

@@ -12,18 +12,12 @@ class PriceController extends Controller
 {
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for editing the price table.
      */
     public function edit(): View
     {
         $data = Price::get(['max_weight', 'max_distance', 'rate'])->toArray();
         return view('admin.editPrices', ['data' => $data]);
-    }
-
-    public function showPricelist(): View
-    {
-        $data = Price::get(['max_weight', 'max_distance', 'rate'])->toArray();
-        return view('pages.pricelist', ['data' => $data]);
     }
 
     /**
@@ -36,7 +30,7 @@ class PriceController extends Controller
             'newData.*.*' => 'required|numeric|min:0',
         ]);
 
-        // update the price table and return success
+        // Update the price table and return success
         if (Price::validateAndUpdate($validatedData['newData'])) {
             $data = Price::get(['max_weight', 'max_distance', 'rate'])->toArray();
             $alert = ['type' => 'success', 'title' => 'Updated Successfully!', 'message' => 'Price table updated successfully!'];
@@ -45,5 +39,14 @@ class PriceController extends Controller
 
         $alert = ['type' => 'error', 'title' => 'Update Failed!', 'message' => 'Unable to price!'];
         return redirect()->route('editPrices')->with('alert', $alert);
+    }
+
+    /**
+     * Show pricelist to the customers.
+     */
+    public function showPricelist(): View
+    {
+        $data = Price::get(['max_weight', 'max_distance', 'rate'])->toArray();
+        return view('pages.pricelist', ['data' => $data]);
     }
 }

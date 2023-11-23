@@ -17,6 +17,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Return fake data for database seeding.
         return [
             'firstname' => fake()->firstName(),
             'lastname' => fake()->lastName(),

@@ -1,3 +1,4 @@
+{{-- Header button for login and logout --}}
 <div {{ $attributes->merge(['class' => 'ml-auto pr-4']) }}>
     <!-- User is logged in, display Logout link -->
     @auth

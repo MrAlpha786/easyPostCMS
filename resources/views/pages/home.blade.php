@@ -1,3 +1,4 @@
+{{-- Home page --}}
 @extends('layouts.home')
 
 @section('title', 'Home')

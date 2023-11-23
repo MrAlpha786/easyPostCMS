@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum CourierStatusType: int
 {
+    // Enumeration members with associated integer values
     case ITEM_ACCEPTED_BY_COURIER = 1;
     case PICKED_UP = 2;
     case COLLECTED = 3;
@@ -15,6 +16,7 @@ enum CourierStatusType: int
     case UNSUCCESSFUL_DELIVERY_ATTEMPT = 9;
     case RETURN = 10;
 
+    // Method to return a string representation of the enumeration member
     public function toString(): string
     {
         return match ($this) {

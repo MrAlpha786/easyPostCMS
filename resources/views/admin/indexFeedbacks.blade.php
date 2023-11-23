@@ -1,16 +1,17 @@
 @extends('layouts.admin')
 
-<!-- Setting the title for the 'About Us' page -->
-@section('title', 'Feedbacks')
+<!-- Setting the title for the page -->
+@section('title', 'Feedback List')
 
 @section('content')
-
+    {{-- Page title --}}
     <div class="bg-slate-200 p-4 rounded-md shadow-md ">
         <div class="flex justify-between items-center">
             <h3 class="text-lg font-semibold">Feedback/Complaints</h3>
         </div>
     </div>
 
+    {{-- Table showing feedbacks --}}
     <div class="bg-slate-200 p-4 mt-4 rounded-md shadow-md ">
         <x-searchbar route="{{ route('indexCourier') }}" />
 

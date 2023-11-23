@@ -1,3 +1,4 @@
+{{-- Admin layout --}}
 @extends('layouts.app')
 
 @section('main')
@@ -30,17 +31,19 @@
                 ['label' => 'List', 'href' => route('indexCourier')],
             ]" />
 
+            {{-- Feedbacks for Admin --}}
             @role('admin')
                 <x-sidebarMenuItem href="{{ route('indexFeedback') }}" label="Feedback/Complaints" id="feedback-menu" />
                 <x-sidebarMenuItem href="{{ route('editPrices') }}" label="Price Table" id="price-menu" />
             @endrole
+
+            {{-- Feedback form for Clerks --}}
             @role('clerk')
                 <x-sidebarMenuItem href="{{ route('createFeedback') }}" label="Feedback/Complaints" id="feedback-menu" />
             @endrole
 
 
             <div class="fixed bottom-0 p-4">
-
                 <p>All Rights Reserved</p>
             </div>
 

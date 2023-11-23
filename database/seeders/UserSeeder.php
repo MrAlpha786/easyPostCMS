@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create an admin.
         User::create([
             'firstName' => 'admin',
             'lastName' => '',
@@ -21,6 +22,7 @@ class UserSeeder extends Seeder
             'password' => 'admin123',
             'role' => UserRoleType::ADMIN,
         ]);
+        // Create a clerk for demo.
         User::create([
             'firstName' => 'clerk1',
             'lastName' => '',

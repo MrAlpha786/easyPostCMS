@@ -9,15 +9,13 @@ class Price extends Model
 {
     use HasFactory;
 
+    // Mass fillable columns.
     protected $fillable = [
         'rate'
     ];
 
     /**
      * Calculate the price based on weight, dimensions, and distance.
-     *
-     * @param  float  $weight
-     * @return float
      */
     public static function calculatePrice($weight)
     {
@@ -42,10 +40,13 @@ class Price extends Model
         return $cost;
     }
 
+    /**
+     * Validate the new recieved price data and update it.
+     */
     public static function validateAndUpdate($data): bool
     {
-        // Initialize an array to store Price objects
         $priceObjectsToUpdate = [];
+
         // Check if all records exist and store the Price objects
         foreach ($data as $maxWeight => $distances) {
             foreach ($distances as $maxDistance => $rate) {
@@ -67,6 +68,7 @@ class Price extends Model
             }
         }
 
+        // Check if all price category are present.
         if (sizeof($priceObjectsToUpdate) != Price::count())
             return false;
 
@@ -75,9 +77,6 @@ class Price extends Model
             // Update the rate
             $update['price']->update(['rate' => $update['rate']]);
         }
-
-        error_log(json_encode($priceObjectsToUpdate));
-
 
         return true;
     }

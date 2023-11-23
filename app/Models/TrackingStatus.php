@@ -11,19 +11,25 @@ class TrackingStatus extends Model
 {
     use HasFactory;
 
+    // Mass fillable.
     protected $fillable = ['status',];
 
-    // cast status value to enum
+    // Cast status value to enum
     protected $casts = [
         'status' => CourierStatusType::class,
     ];
 
+    /**
+     * Get the string value of status using enum
+     */
     public function getStatusString()
     {
         return $this->status->toString();
     }
 
-    // Define the relationship with courier
+    /**
+     * Define the relationship with courier
+     */
     public function courier(): BelongsTo
     {
         return $this->belongsTo(Courier::class);

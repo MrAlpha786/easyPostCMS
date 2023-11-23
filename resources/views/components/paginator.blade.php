@@ -1,3 +1,4 @@
+{{-- Custom pagination buttons and details --}}
 <div class="flex items-center justify-between m-2">
 
     {{-- Previous Page Link --}}

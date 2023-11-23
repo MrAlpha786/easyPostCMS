@@ -14,11 +14,12 @@ class Courier extends Model
 {
     use HasFactory;
 
+    // These field are not mass fillable.
     protected $guarded = [
         'price',
     ];
 
-    // cast status value to enum
+    // Cast status value to enum
     protected $casts = [
         'status' => CourierStatusType::class,
     ];
@@ -57,8 +58,6 @@ class Courier extends Model
 
     /**
      * Accessor to calculate and retrieve the price attribute.
-     *
-     * @return float
      */
     public function getPriceAttribute()
     {
@@ -81,10 +80,8 @@ class Courier extends Model
     }
 
     /**
-     * Override the save method to ensure the price is recalculated before saving.
-     *
-     * @param array $options
-     * @return bool
+     * Override the save method to ensure the price is recalculated before 
+     * saving.
      */
     public function save(array $options = [])
     {
@@ -94,7 +91,9 @@ class Courier extends Model
         return parent::save($options);
     }
 
-    // Define the relationship with status
+    /** 
+     * Define the relationship with status
+     */
     public function trackingStatuses(): HasMany
     {
         return $this->hasMany(TrackingStatus::class);

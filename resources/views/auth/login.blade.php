@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Employee Login')
+
 @section('main')
     <div class="flex h-screen bg-gray-900">
         <div class="=flex m-auto bg-gray-300 w-fit p-4 rounded-md shadow-md">

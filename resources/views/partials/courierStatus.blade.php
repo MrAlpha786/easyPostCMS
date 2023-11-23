@@ -29,6 +29,7 @@
             </div>
         </div>
 
+        {{-- Courier Information --}}
         <div class="bg-slate-200 p-4 mt-4 rounded-md shadow-md">
             <h2 class="text-xl font-semibold mb-4">Courier Information</h2>
             <div class="flex justify-between items-center">

@@ -16,6 +16,7 @@ class FeedbackFactory extends Factory
      */
     public function definition(): array
     {
+        // Return fake data for database seeding.
         return [
             'name' => fake()->name(),
             'email' => fake()->email(),

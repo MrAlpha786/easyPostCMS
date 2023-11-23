@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 
-<!-- Setting the title for the 'About Us' page -->
+<!-- Setting the title for the page -->
 @section('title', 'Prices')
 
 @section('content')
+    {{-- Page title and buttons --}}
     <div class="bg-slate-200 p-4 rounded-md shadow-md ">
         <div class="flex justify-between items-center">
             <h3 class="text-lg font-semibold">Price List</h3>
@@ -21,7 +22,10 @@
             </div>
         </div>
     </div>
+
     <p class="text-red-500 my-4">* Please be careful while editing, if any field is wrong whole data will get rejected.</p>
+
+    {{-- Table showing the prices to edit --}}
     <div class="overflow-x-auto bg-slate-200 rounded-md shadow-md p-2">
         <form id="priceForm" action="{{ route('updatePrices') }}" method="post">
             @csrf
@@ -81,6 +85,7 @@
 @endsection
 
 <script>
+    // Hide the edit button and set fieldset to enabled.
     function toggleMenu() {
         event.preventDefault();
         document.getElementById('edit-menu').classList.toggle('hidden');

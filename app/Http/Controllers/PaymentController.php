@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\View\View;
 
+// Control payment view.
 class PaymentController extends Controller
 {
     /**
@@ -41,12 +42,18 @@ class PaymentController extends Controller
         }
     }
 
+    /**
+     * Payment success route.
+     */
     public function paymentSuccess(Request $request)
     {
         $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Courier registered successfully, Please Note down your TN: ' . $request->tn, 'dismissable' => true];
         return redirect()->intended(route('courier'))->with('alert', $alert);
     }
 
+    /**
+     * Payment failure route.
+     */
     public function paymentFailure()
     {
         $alert = ['type' => 'error', 'title' => 'Error!', 'message' => 'Payment failed!'];

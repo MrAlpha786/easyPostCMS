@@ -6,9 +6,8 @@ use App\Enums\UserRoleType;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Hash;
 
+// Control the user view and model.
 class UserController extends Controller
 {
 
@@ -18,9 +17,7 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         $search = $request->input('q');
-
         $query = User::query();
-
         if ($search) {
             $query->search($search);
         }
@@ -70,6 +67,9 @@ class UserController extends Controller
         return redirect()->route('indexUser')->with('alert', $alert);
     }
 
+    /**
+     * Show the form for editing user details.
+     */
     public function edit($id)
     {
         $user = User::findOrFail($id);
@@ -79,6 +79,9 @@ class UserController extends Controller
         return view('admin.editUser', ['roleOptions' => UserRoleType::cases()])->with($data);
     }
 
+    /**
+     * Update the user details.
+     */
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
@@ -99,6 +102,9 @@ class UserController extends Controller
         return redirect()->route('indexUser')->with('alert', $alert); // Redirect to the courier index page after update
     }
 
+    /**
+     * Delete the user.
+     */
     public function destroy($id)
     {
         $user = User::findOrFail($id);

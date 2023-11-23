@@ -8,10 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\View\View;
 
+// Control all courier related routes.
 class CourierController extends Controller
 {
-
-    private function __validate(Request $request)
+    /**
+     * Validate the request data
+     */
+    private function __validate(Request $request): array
     {
         // Validate the form data
         return $request->validate([
@@ -31,6 +34,9 @@ class CourierController extends Controller
         ]);
     }
 
+    /**
+     * Create a courior object and return for futher handling
+     */
     private function __store($validatedData): Courier
     {
         try {
@@ -57,14 +63,13 @@ class CourierController extends Controller
     }
 
     /**
-     * Show all application users.
+     * Show all courior in a pagination view
      */
     public function index(Request $request): View
     {
+        // If request contains a search query filter the results
         $search = $request->input('q');
-
         $query = Courier::query();
-
         if ($search) {
             $query->search($search);
         }
@@ -85,27 +90,6 @@ class CourierController extends Controller
         return view('admin.createCourier', ['statusOptions' => CourierStatusType::cases()]);
     }
 
-    public function createCourier(): View
-    {
-        return view('pages.createCourier');
-    }
-
-    public function registerCourier(Request $request)
-    {
-        $validatedData = $this->__validate($request);
-
-        try {
-            $courier = $this->__store($validatedData);
-            $courier->save();
-        } catch (\Throwable $th) {
-            $alert = ['type' => 'error', 'title' => 'Failed!', 'message' => 'Something Went Wrong!'];
-            return back()->with('alert', $alert);
-        }
-        // Encrypt the information before sending, in real world scenerio Secret keys are used to securely exchange data.
-        $encryptedData = Crypt::encrypt(['courier_id' => $courier->id, 'courier_price' => $courier->price]);
-
-        return redirect()->route('createPayment', ['data' => urlencode($encryptedData)]);
-    }
 
     /**
      * Store a new courier.
@@ -116,10 +100,9 @@ class CourierController extends Controller
 
         try {
             $courier = $this->__store($validatedData);
-
             $courier->save();
 
-            $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Courier Created Successfully!'];
+            $alert = ['type' => 'success', 'title' => 'Success!', 'message' => 'Courier Created Successfully! TN: ' . $courier->tracking_number . ' and Price: ' . $courier->price, 'dismissable' => true];
         } catch (\Throwable $th) {
             $alert = ['type' => 'error', 'title' => 'Failded!', 'message' => 'Courier Not Created!'];
         }
@@ -128,6 +111,9 @@ class CourierController extends Controller
         return redirect()->route('indexCourier')->with('alert', $alert);
     }
 
+    /**
+     * Show the courior info.
+     */
     public function show($id)
     {
         $courier = Courier::findOrFail($id);
@@ -139,24 +125,9 @@ class CourierController extends Controller
         return view('admin.showCourier', ['courier' => $courier, 'statuses' => $statuses]);
     }
 
-    public function trackCourier(Request $request)
-    {
-        $validatedData = $request->validate([
-            'tracking_number' => 'required|string|alpha_num|size:16',
-        ]);
-
-        $courier = Courier::whereRaw("BINARY `tracking_number` = ?", $validatedData['tracking_number'])->first();
-
-        if (!$courier)
-            return back()->withInput()->with('nodata', true);
-
-        $statuses = $courier->trackingStatuses()->orderBy('created_at')->get();
-
-        return back()
-            ->withInput()
-            ->with(['statuses' => $statuses ?? null, 'courier' => $courier]);
-    }
-
+    /**
+     * Show the courier update form.
+     */
     public function edit($id)
     {
         $courier = Courier::findOrFail($id);
@@ -166,6 +137,9 @@ class CourierController extends Controller
         return view('admin.editCourier', ['statusOptions' => CourierStatusType::cases()])->with($data);
     }
 
+    /**
+     * Update the courier after validating input.
+     */
     public function update(Request $request, $id)
     {
         // Validate the form data
@@ -195,6 +169,9 @@ class CourierController extends Controller
         return redirect()->route('indexCourier')->with('alert', $alert); // Redirect to the courier index page after update
     }
 
+    /**
+     * Delete the courier.
+     */
     public function destroy($id)
     {
         $courier = Courier::findOrFail($id);
@@ -203,5 +180,55 @@ class CourierController extends Controller
         $alert = ['type' => 'info', 'title' => 'Deleted!', 'message' => 'Courier Deleted Successfully!'];
 
         return redirect()->route('indexCourier')->with('alert', $alert); // Redirect to the courier index page after deletion
+    }
+
+    /**
+     * Show the new courier form to customers.
+     */
+    public function createCourier(): View
+    {
+        return view('pages.createCourier');
+    }
+
+    /**
+     * Create a courier for customer and redirect him to payment portal.
+     */
+    public function registerCourier(Request $request)
+    {
+        $validatedData = $this->__validate($request);
+
+        try {
+            $courier = $this->__store($validatedData);
+            $courier->save();
+        } catch (\Throwable $th) {
+            $alert = ['type' => 'error', 'title' => 'Failed!', 'message' => 'Something Went Wrong!'];
+            return back()->with('alert', $alert);
+        }
+        // Encrypt the information before sending, in real world scenerio Secret keys are used to securely exchange data.
+        $encryptedData = Crypt::encrypt(['courier_id' => $courier->id, 'courier_price' => $courier->price]);
+
+        return redirect()->route('createPayment', ['data' => urlencode($encryptedData)]);
+    }
+
+    /**
+     * Find the courier using tracking number.
+     */
+    public function trackCourier(Request $request)
+    {
+        $validatedData = $request->validate([
+            'tracking_number' => 'required|string|alpha_num|size:16',
+        ]);
+
+        $courier = Courier::whereRaw("BINARY `tracking_number` = ?", $validatedData['tracking_number'])->first();
+
+        if (!$courier)
+            return back()->withInput()->with('nodata', true);
+
+        // Find the status update for this courier.
+        $statuses = $courier->trackingStatuses()->orderBy('created_at')->get();
+
+        return back()
+            ->withInput()
+            ->with(['statuses' => $statuses ?? null, 'courier' => $courier]);
     }
 }

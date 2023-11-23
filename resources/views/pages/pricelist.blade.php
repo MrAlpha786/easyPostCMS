@@ -1,3 +1,4 @@
+{{-- Pricelist page --}}
 @extends('layouts.home')
 
 @section('title', 'Price List')

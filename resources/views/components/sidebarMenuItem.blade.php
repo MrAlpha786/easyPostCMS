@@ -1,5 +1,4 @@
-<!-- resources/views/components/employee-menu.blade.php -->
-
+{{-- Custom sidebar menus item to create tree menu --}}
 @props(['label', 'href', 'menuItems' => [], 'id' => ''])
 
 <div>

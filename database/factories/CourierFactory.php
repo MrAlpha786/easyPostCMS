@@ -27,6 +27,7 @@ class CourierFactory extends Factory
      */
     public function definition(): array
     {
+        // Return fake data for database seeding.
         return [
             'sender_name' => fake()->name(),
             'sender_address' => fake()->address(),

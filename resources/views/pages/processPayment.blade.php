@@ -1,3 +1,4 @@
+{{-- Payment process page, it does not extent any layout, it is supposedly external page --}}
 <!DOCTYPE html>
 <html lang="en">
 

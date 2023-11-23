@@ -26,14 +26,20 @@ Route::view('about', 'pages.about')->name('about');
 // Contact Us page route
 Route::view('contact', 'pages.contact')->name('contact');
 
+// Tracker page route
 Route::view('tracker', 'pages.trackStatus')->name('tracker');
 
+// Price List page route
+Route::get('pricelist', [PriceController::class, 'showPricelist'])->name('pricelist');
+
+// Customer feddback routes
 Route::controller(FeedbackController::class)->prefix('feedback')->group(function () {
     // Feedback page route
     Route::get('/', 'createFeedback')->name('feedback');
     Route::post('/submit', 'storeFeedback')->name('submitFeedback');
 });
 
+// Customer courior registration routes.
 Route::controller(CourierController::class)->prefix('courier')->group(function () {
     // Courier registration routes
     Route::get('/', 'createCourier')->name('courier');
@@ -42,17 +48,13 @@ Route::controller(CourierController::class)->prefix('courier')->group(function (
     Route::post('/register', 'registerCourier')->name('registerCourier');
 });
 
-
-
+// Payment portal routes.
 Route::controller(PaymentController::class)->prefix('payment')->group(function () {
     Route::get('/', 'create')->name('createPayment');
     Route::post('/process', 'processPayment')->name('processPayment');
     Route::get('/success', 'paymentSuccess')->name('paymentSuccess');
     Route::get('/failure', 'paymentFailure')->name('paymentFailure');
 });
-
-// Price List page route
-Route::get('pricelist', [PriceController::class, 'showPricelist'])->name('pricelist');
 
 // Admin dashboard route
 Route::get('/admin', [DashboardController::class, 'stats'])->middleware(['auth'])->name('dashboard');

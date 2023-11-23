@@ -1,6 +1,7 @@
 <!-- Custom textarea component with props for id, name, and label -->
 @props(['id', 'name', 'label'])
 
+{{-- Custom textarea component --}}
 <div {{ $attributes->merge(['class' => 'block mb-4']) }}>
 
     <label for="{{ $id }}" class="inline-block">{{ $label }}</label>
