@@ -2,7 +2,6 @@
     "version": 2,
     "functions": {
         "api/index.php": { "runtime": "vercel-php@0.6.0"},
-        "public/**": { "runtime": "@vercel/static" }
     },
     "routes": [
         {
