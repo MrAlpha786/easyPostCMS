@@ -1,9 +1,9 @@
 {
-    "name": "laravel/laravel",
+    "name": "EasyPost e-Post System",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Courier Management System",
     "keywords": ["laravel", "framework"],
-    "license": "MIT",
+    "license": "GPL-3.0-or-later",
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
