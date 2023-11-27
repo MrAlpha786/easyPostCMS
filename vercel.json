@@ -4,9 +4,9 @@
         "api/index.php": { "runtime": "vercel-php@0.6.0" }
     },
     "routes": [
-         {
-            "src": "/(css|js|vendor|assets|build)/(.*)",
-            "dest": "public/$1/$2"
+        {
+            "src": "/(css|js)/(.*)$",
+            "dest": "/api/assets.php?type=$1&file=$2"
         },
         {
             "src": "/(.*)",
