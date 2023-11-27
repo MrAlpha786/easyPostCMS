@@ -18,6 +18,7 @@
         "APP_ENV": "production",
         "APP_DEBUG": "false",
         "APP_URL": "https://easypost-mralpha786.vercel.app",
+        "ASSET_URL": "https://easypost-mralpha786.vercel.app",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
