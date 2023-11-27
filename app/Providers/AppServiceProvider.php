@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         // Bind the observer to model
         Courier::observe(CourierObserver::class);
 
-        // Create a custom blade directive to chekc user roles in templates.
+        // Create a custom blade directive to check user roles in templates.
         Blade::if('role', function ($role) {
             return auth()->check() && auth()->user()->role->toString() === $role;
         });
